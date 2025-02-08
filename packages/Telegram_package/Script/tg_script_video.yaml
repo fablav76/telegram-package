@@ -1,0 +1,27 @@
+# Questo script manda il messaggio di richiesta dei video.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_notifiche.
+
+script:
+  tg_script_video:
+    alias: tg script video
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F4F9" }} *MENU VIDEO*:
+
+            ----------------------------------
+
+            Da questo menu è possibile{{'\n'}}
+            registrare un breve video{{'\n'}}
+            delle telecamere{{'\n'}}
+            Quale vuoi vedere?
+          inline_keyboard:
+            - '{{ "\U0001F4F9" }} Soggiorno:/video_soggiorno, {{ "\U0001F4F9" }} Cucina:/video_cucina'
+            - '{{ "\U0001F4F9" }} Camera:/video_camera, {{ "\U0001F4F9" }} Cameretta:/video_cameretta'
+            - '{{ "\U0001F4F9" }} Tutte le cam:/video_tutti'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'

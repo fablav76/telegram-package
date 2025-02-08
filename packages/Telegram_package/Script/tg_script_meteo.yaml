@@ -1,0 +1,37 @@
+# Questo script esegue il menu del meteo.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_meteo.
+
+script:
+  tg_script_meteo:
+    alias: tg script meteo
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U00002600" }} *METEO*:
+              
+            ------------------------------------------------
+
+              *CONDIZIONI METEO*
+
+              *OGGI*
+              ---------------------------------------
+              Condizioni: {{ state_attr('sensor.meteo_giornaliero','day0')|capitalize }}
+              Nuvolosità: {{ state_attr('sensor.meteo_giornaliero','cloud_coverage') }} %
+              Temperatura: {{ state_attr('sensor.meteo_giornaliero','temperature') }} °C
+              Minima: {{ state_attr('sensor.meteo_giornaliero','forecast')[0]['templow'] }} °C
+              Umidità: {{ state_attr('sensor.meteo_giornaliero','forecast')[0]['humidity'] }} %
+
+              *DOMANI*
+              ---------------------------------------
+              Condizioni: {{ state_attr('sensor.meteo_giornaliero','day1')|capitalize }}
+              Temperatura: {{ state_attr('sensor.meteo_giornaliero','forecast')[1]['temperature'] }} °C
+              Minima: {{ state_attr('sensor.meteo_giornaliero','forecast')[1]['templow'] }} °C
+              Umidità: {{ state_attr('sensor.meteo_giornaliero','forecast')[1]['humidity'] }} %
+
+          inline_keyboard:
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'

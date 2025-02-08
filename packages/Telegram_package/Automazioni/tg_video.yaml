@@ -1,0 +1,260 @@
+automation:
+  ############### Callback Video
+  - id: tgvideo
+    alias: tg video
+    mode: restart
+    ##hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /video
+        id: video
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /video
+        id: video_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /video_soggiorno
+        id: video_soggiorno
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /video_cucina
+        id: video_cucina
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /video_camera
+        id: video_camera
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /video_cameretta
+        id: video_cameretta
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /video_tutti
+        id: video_tutti
+    actions:
+      - choose:
+          ############### ID VIDEO ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - video
+            sequence:
+              - action: script.tg_script_video
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID VIDEO CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - video_callback
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_video
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### VIDEO SOGGIORNO ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - video_soggiorno
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - parallel:
+                - action: script.tg_script_video_soggiorno
+                  metadata: {}
+                  data:
+                    trigger: "{{ trigger.event.data.user_id }}"
+                - sequence:
+                    - action: telegram_bot.send_message
+                      metadata: {}
+                      data:
+                        message: Registrazione soggiorno in corso
+                        title: Attendere 10 secondi
+                        target: "{{ trigger.event.data.user_id }}"
+                    - delay:
+                        hours: 0
+                        minutes: 0
+                        seconds: 10
+                        milliseconds: 0
+                    - action: telegram_bot.delete_message
+                      data:
+                        message_id: "last"
+                        chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_video
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### VIDEO CUCINA ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - video_cucina
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - parallel:
+                - action: script.tg_script_video_cucina
+                  metadata: {}
+                  data:
+                    trigger: "{{ trigger.event.data.user_id }}"
+                - sequence:
+                    - action: telegram_bot.send_message
+                      metadata: {}
+                      data:
+                        message: Registrazione cucina in corso
+                        title: Attendere 10 secondi
+                        target: "{{ trigger.event.data.user_id }}"
+                    - delay:
+                        hours: 0
+                        minutes: 0
+                        seconds: 10
+                        milliseconds: 0
+                    - action: telegram_bot.delete_message
+                      data:
+                        message_id: "last"
+                        chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_video
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### VIDEO CAMERA ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - video_camera
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - parallel:
+                - action: script.tg_script_video_camera
+                  metadata: {}
+                  data:
+                    trigger: "{{ trigger.event.data.user_id }}"
+                - sequence:
+                    - action: telegram_bot.send_message
+                      metadata: {}
+                      data:
+                        message: Registrazione camera in corso
+                        title: Attendere 10 secondi
+                        target: "{{ trigger.event.data.user_id }}"
+                    - delay:
+                        hours: 0
+                        minutes: 0
+                        seconds: 10
+                        milliseconds: 0
+                    - action: telegram_bot.delete_message
+                      data:
+                        message_id: "last"
+                        chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_video
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### VIDEO CAMERETTA ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - video_cameretta
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - parallel:
+                - action: script.tg_script_video_cameretta
+                  metadata: {}
+                  data:
+                    trigger: "{{ trigger.event.data.user_id }}"
+                - sequence:
+                    - action: telegram_bot.send_message
+                      metadata: {}
+                      data:
+                        message: Registrazione cameretta in corso
+                        title: Attendere 10 secondi
+                        target: "{{ trigger.event.data.user_id }}"
+                    - delay:
+                        hours: 0
+                        minutes: 0
+                        seconds: 10
+                        milliseconds: 0
+                    - action: telegram_bot.delete_message
+                      data:
+                        message_id: "last"
+                        chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_video
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### VIDEO TUTTE LE CAMERE ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - video_tutti
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - parallel:
+                - action: script.tg_script_video_soggiorno
+                  metadata: {}
+                  data:
+                    trigger: "{{ trigger.event.data.user_id }}"
+                - action: script.tg_script_video_cucina
+                  metadata: {}
+                  data:
+                    trigger: "{{ trigger.event.data.user_id }}"
+                - action: script.tg_script_video_camera
+                  metadata: {}
+                  data:
+                    trigger: "{{ trigger.event.data.user_id }}"
+                - action: script.tg_script_video_cameretta
+                  metadata: {}
+                  data:
+                    trigger: "{{ trigger.event.data.user_id }}"
+                - sequence:
+                    - action: telegram_bot.send_message
+                      metadata: {}
+                      data:
+                        message: Registrazione video in corso
+                        title: Attendere 10 secondi
+                        target: "{{ trigger.event.data.user_id }}"
+                    - delay:
+                        hours: 0
+                        minutes: 0
+                        seconds: 10
+                        milliseconds: 0
+                    - action: telegram_bot.delete_message
+                      data:
+                        message_id: "last"
+                        chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_video
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"

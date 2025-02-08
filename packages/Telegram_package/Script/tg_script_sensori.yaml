@@ -1,0 +1,59 @@
+# Questo script esegue il menu dei sensori.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_meteo.
+
+script:
+  tg_script_sensori:
+    alias: tg script sensori
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F441" }} *SENSORI*:
+
+            ------------------------------------------------
+
+              *SENSORI DI ALLARME*
+              ---------------------------------------
+              {% if is_state('binary_sensor.alarm_camera_sensors','off') %}🟢{% else %}🔴{% endif %} Alarm Cameras: *{{ states('binary_sensor.alarm_camera_sensors')|upper }}*
+              {% if is_state('binary_sensor.alarm_door_sensors','off') %}🟢{% else %}🔴{% endif %} Sensori Porta: *{{ states('binary_sensor.alarm_door_sensors')|upper }}*
+              {% if is_state('binary_sensor.alarm_motion_sensors','off') %}🟢{% else %}🔴{% endif %} Sensori Movimento: *{{ states('binary_sensor.alarm_motion_sensors')|upper }}*
+
+              *PORTA INGRESSO*
+              ---------------------------------------
+              {% if is_state('sensor.porta_ingresso','Porta chiusa') %}🟢{% else %}🔴{% endif %} *{{ states('sensor.porta_ingresso')|upper }}*
+
+          inline_keyboard:
+            - '{{ "\u21a9\ufe0f" }} Aggiorna:/aggiorna_sensori'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  tg_script_sensori_edit:
+    alias: tg script sensori edit
+    sequence:
+      - action: telegram_bot.edit_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U0001F441" }} *SENSORI*:
+
+            ------------------------------------------------
+
+              *SENSORI DI ALLARME*
+              ---------------------------------------
+              {% if is_state('binary_sensor.alarm_camera_sensors','off') %}🟢{% else %}🔴{% endif %} Alarm Cameras: *{{ states('binary_sensor.alarm_camera_sensors')|upper }}*
+              {% if is_state('binary_sensor.alarm_door_sensors','off') %}🟢{% else %}🔴{% endif %} Sensori Porta: *{{ states('binary_sensor.alarm_door_sensors')|upper }}*
+              {% if is_state('binary_sensor.alarm_motion_sensors','off') %}🟢{% else %}🔴{% endif %} Sensori Movimento: *{{ states('binary_sensor.alarm_motion_sensors')|upper }}*
+
+              *PORTA INGRESSO*
+              ---------------------------------------
+              {% if is_state('sensor.porta_ingresso','Porta chiusa') %}🟢{% else %}🔴{% endif %} *{{ states('sensor.porta_ingresso')|upper }}*
+
+          inline_keyboard:
+            - '{{ "\u21a9\ufe0f" }} Aggiorna:/aggiorna_sensori'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'

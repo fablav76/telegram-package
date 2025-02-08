@@ -1,0 +1,28 @@
+# Questo script manda il messaggio di richiesta delle foto delle videocamere.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_notifiche.
+
+script:
+  tg_script_snapshots:
+    alias: tg script snapshots
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F4F9" }} *MENU SNAPSHOTS*:
+
+            ----------------------------------
+
+            Da questo menu è possibile{{'\n'}}
+            ottenere le foto{{'\n'}}
+            dalle telecamere.{{'\n'}}
+
+          inline_keyboard:
+            - '{{ "\U0001F6AA" }} Porta di ingresso:/snap_porta, {{ "\U0001F6CB" }} Soggiorno:/snap_soggiorno'
+            - '{{ "\U0001F37D" }} Cucina:/snap_cucina, {{ "\U0001F37D" }} Cucina2:/snap_cucina2'
+            - '{{ "\U0001F6CC" }} Camera:/snap_camera, {{ "\U0001F3A0" }} Cameretta:/snap_cameretta'
+            - '{{ "\U0001F4F7" }} Tutte le cam:/snap_tutti'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'

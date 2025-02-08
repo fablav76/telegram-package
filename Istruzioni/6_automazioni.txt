@@ -1,0 +1,120 @@
+##########################################  AUTOMAZIONI  ##########################################
+
+AUTOMAZIONI                 TIPO          SCRIPT CORRELATO                        DESCRIZIONE
+
+tg_start_stop.yaml    (FILE YAML)                                                 L'automazione "principe" che da il via a tutto
+  ├ tg start                (A)   --->    -----                                   Il menu si trova nell'automazione stessa, comando e callback coincidono (id unico)
+  └ tg stop                 (A)   --->    -----                                   Il menu (diverso) si trova nell'automazione stessa, c'e solo callback (quando si clicca su Menu principale)
+
+tg_allarme.yaml       (FILE YAML)
+  └ tg allarme              (A)   --->
+      ├ alarm_command       (id)  --->    script.tg_script_allarme                L'automazione lancia lo script sullo stato di allarme, notifiche e sirena in seguito al comando /alarm
+      ├ alarm_callback      (id)  --->    script.tg_script_allarme                L'automazione lancia lo script sullo stato di allarme, notifiche e sirena in seguito al callback sul tasto allarme
+      ├ alarm-disarm        (id)  --->    script.tg_script_allarme                L'automazione disattiva l'allarme e rilancia lo script del menu allarme
+      ├ alarm-arm-home      (id)  --->    script.tg_script_allarme                L'automazione attiva allarme casa l'allarme e rilancia lo script del menu allarme
+      ├ alarm-arm-away      (id)  --->    script.tg_script_allarme                L'automazione attiva allarme fuori casa l'allarme e rilancia lo script del menu allarme
+      ├ alarm-total         (id)  --->    script.tg_script_allarme                L'automazione attiva booleano allarme totale (fuori casa - notifiche e sirena) e rilancia lo script del menu allarme
+      └ sirena              (id)  --->    script.tg_script_allarme                L'automazione attiva il booleano sirena e rilancia lo script del menu allarme
+      
+tg_avvio_server.yaml  (FILE YAML)
+  └ tg avvio server         (A)   --->    -----
+
+tg_locate_phone.yaml  (FILE YAML)
+  └ tg locate               (A)
+      ├ locate              (id)  --->    script.tg_script_locate
+      ├ locate_callback     (id)  --->    script.tg_script_locate
+      ├ locate_iphone       (id)  --->    script.tg_script_locate_iphone
+      ├ locate_iphone_map   (id)  --->    script.tg_script_locate_iphone_map
+      ├ locate_pixel_7      (id)  --->    script.tg_script_locate_pixel_7
+      ├ locate_pixel_7_map  (id)  --->    script.tg_script_locate_pixel_7_map
+      ├ locate_oppo         (id)  --->    script.tg_script_locate_oppo
+      └ locate_oppo_map     (id)  --->    script.tg_script_locate_oppo_map
+
+tg_luci.yaml          (FILE YAML)
+  └ tg luci                 (A)
+      ├ luci_command        (id)  --->    script.tg_script_luci                   L'automazione lancia lo script del menu luci in seguito al comando /luci
+      ├ luci_callback       (id)  --->    script.tg_script_luci                   L'automazione lancia lo script del menu luci in seguito ad un callback sul tasto luci
+      ├ luci_off            (id)  --->    script.tg_script_luci_edit              L'automazione spegne tutte le luci in casa e lancia un aggiornamento del menu luci
+      ├ soggiorno           (id)  --->    script.tg_script_luci_soggiorno         L'automazione lancia il menu luci soggiorno
+      ├ accendisoggiorno    (id)  --->    script.tg_script_luci_soggiorno_edit    L'automazione accende tutte le luci in soggiorno e lancia un aggiornamento del menu luci soggiorno
+      ├ spegnisoggiorno     (id)  --->    script.tg_script_luci_soggiorno_edit    L'automazione spegne tutte le luci in soggiorno e lancia un aggiornamento del menu luci soggiorno
+      ├ luce_soggiorno      (id)  --->    script.tg_script_luci_soggiorno_edit    L'automazione fa un toggle e lancia un aggiornamento del menu luci soggiorno
+      ├ led_soggiorno       (id)  --->    script.tg_script_luci_soggiorno_edit    L'automazione fa un toggle e lancia un aggiornamento del menu luci soggiorno
+      ├ lampada_soggiorno   (id)  --->    script.tg_script_luci_soggiorno_edit    L'automazione fa un toggle e lancia un aggiornamento del menu luci soggiorno
+      ├ cucina              (id)  --->    script.tg_script_luci_cucina            L'automazione lancia il menu luci cucina
+      ├ accendicucina       (id)  --->    script.tg_script_luci_cucina_edit       L'automazione accende tutte le luci in cucina e lancia un aggiornamento del menu luci cucina
+      ├ spegnicucina        (id)  --->    script.tg_script_luci_cucina_edit       L'automazione spegne tutte le luci in cucina e lancia un aggiornamento del menu luci cucina
+      ├ luce_cucina         (id)  --->    script.tg_script_luci_cucina_edit       L'automazione fa un toggle e lancia un aggiornamento del menu luci cucina
+      ├ luce_ripostiglio    (id)  --->    script.tg_script_luci_cucina_edit       L'automazione fa un toggle e lancia un aggiornamento del menu luci cucina
+      ├ ingresso            (id)  --->    script.tg_script_luci_ingresso          L'automazione lancia il menu luci ingresso
+      ├ accendiingresso     (id)  --->    script.tg_script_luci_ingresso_edit     L'automazione accende tutte le luci dell'ingresso e lancia un aggiornamento del menu luci ingresso
+      ├ spegniingresso      (id)  --->    script.tg_script_luci_ingresso_edit     L'automazione spegne tutte le luci dell'ingresso e lancia un aggiornamento del menu luci ingresso
+      ├ luce_ingresso_1     (id)  --->    script.tg_script_luci_ingresso_edit     L'automazione fa un toggle e lancia un aggiornamento del menu luci ingresso
+      ├ luce_ingresso_2     (id)  --->    script.tg_script_luci_ingresso_edit     L'automazione fa un toggle e lancia un aggiornamento del menu luci ingresso
+      .........
+      
+tg_meteo.yaml         (FILE YAML)
+  └ tg meteo                (A)
+      ├ meteo               (id)  --->      script.tg_script_meteo                L'automazione lancia lo script del meteo in seguito al comando /meteo
+      └ meteo_callback      (id)  --->      script.tg_script_meteo                L'automazione lancia lo script del meteo in seguito ad un callback sul tasto meteo
+      
+tg_notifica_allarme.yaml(FILE YAML)                                               Semplice automazione che notifica l'inserimento / disinserimento alle ore x
+
+tg_notifiche.yaml     (FILE YAML)
+  └ tg_notifiche            (A)
+      ├ notify              (id)    --->    script.tg_script_notifiche            L'automazione lancia il menu notifiche in seguito al comando /notify
+      ├ notify_callback     (id)    --->    script.tg_script_notifiche            L'automazione lancia il menu notifiche in seguito ad un callback sul tasto notifiche
+      ├ telegram_off        (id)    --->    script.tg_script_notifiche            L'automazione spegne il booleano ed rilancia lo script
+      ├ telegram_on         (id)    --->    script.tg_script_notifiche            L'automazione accende il booleano ed rilancia lo script
+      ├app_companion_off    (id)    --->    script.tg_script_notifiche            L'automazione spegne il booleano ed rilancia lo script
+      └app_companion_on     (id)    --->    script.tg_script_notifiche            L'automazione spegne il booleano ed rilancia lo script
+
+tg_sensori.yaml       (FILE YAML)
+  └ tg sensori              (A)
+      ├ sensori             (id)    --->    script.tg_script_sensori              L'automazione lancia il menu sensori in seguito al comando /sensori
+      ├ sensori_callback    (id)    --->    script.tg_script_sensori              L'automazione lancia il menu sensori in seguito ad un callback sul tasto sensori
+      └ aggiorna_sensori    (id)    --->    script.tg_script_sensori_edit         L'automazione aggiorna il menu sensori
+
+tg_servizi.yaml       (FILE YAML)
+  └ tg servizi              (A)
+      ├ servizi             (id)    --->    script.tg_script_servizi              L'automazione lancia il menu servizi in seguito al comando /servizi
+      ├ servizi_callback    (id)    --->    script.tg_script_servizi              L'automazione lancia il menu servizi in seguito al comando /servizi
+      └ localtuya           (id)    --->    script.tg_script_servizi              L'automazione compie una serie di azioni, riavvia l'integrazione localtuya e ritorna al menu servizi
+
+tg_sistema.yaml       (FILE YAML)
+  └ tg sistema              (A)
+      ├ sistema             (id)    --->    script.tg_script_sistema              L'automazione lancia il menu sistema in seguito al comando /sistema
+      ├ sistema_callback    (id)    --->    script.tg_script_sistema              L'automazione lancia il menu sistema in seguito al callback sul tasto sistema
+      ├ restart_ha          (id)            -----                                 L'automazione manda un ulteriore messaggio per la conferma si/no (restart_ha_yes/torna a sistema
+      └ restart_ha_yes      (id)    --->    -----                                 L'automazione invia un messaggio e riavvia Home Assistant
+
+tg_snapshots.yaml     (FILE YAML)
+  └ tg snapshots            (A)
+      ├ snapshots           (id)    --->    script.tg_script_snapshots            L'automazione lancia il menu snapshots in seguito al comando /snapshots
+      ├ snapshots_callback  (id)    --->    script.tg_script_snapshots            L'automazione lancia il menu snapshots in seguito al callback sul tasto snapshots
+      ├ snap_soggiorno      (id)    --->    script.tg_script_snapshots            L'automazione cattura ed invia foto del soggiorno, poi torna al menu snapshots
+      ├ snap_porta          (id)    --->    script.tg_script_snapshots            L'automazione cattura ed invia foto della porta, poi torna al menu snapshots
+      ├ snap_cucina         (id)    --->    script.tg_script_snapshots            L'automazione cattura ed invia foto della cucina, poi torna al menu snapshots
+      ├ snap_cucina2        (id)    --->    script.tg_script_snapshots            L'automazione cattura ed invia un'altra prospettiva della cucina, poi torna al menu snapshots
+      ├ snap_camera         (id)    --->    script.tg_script_snapshots            L'automazione cattura ed invia foto della camera da letto, poi torna al menu snapshots
+      ├ snap_cameretta      (id)    --->    script.tg_script_snapshots            L'automazione cattura ed invia foto della cameretta, poi torna al menu snapshots
+      └ snap_tutti          (id)    --->    script.tg_script_snapshots            L'automazione cattura ed invia foto di tutte le videocamere, poi torna al menu snapshots
+      
+tg_stato_casa.yaml    (FILE YAML)
+  └ tg stato casa           (A)
+      ├ casa                (id)    --->      script.tg_script_stato_casa         L'automazione lancia il menu dello stato della casa in seguito al comando /casa
+      ├ casa_callback       (id)    --->      script.tg_script_stato_casa         L'automazione lancia il menu dello stato della casa in seguito al callback sul tast stato casa
+      ├ light_off           (id)    --->      script.tg_script_stato_casa         L'automazione spegne le luci e riavvia lo script
+      ├ switch_off          (id)    --->      script.tg_script_stato_casa         L'automazione spegne gli interruttori e riavvia lo script
+      └ all_off             (id)    --->      script.tg_script_stato_casa         L'automazione spegne tutte le luci e gli interruttiri e riavvia lo script
+
+tg_video.yaml         (FILE YAML)
+  └ tg video                (A)
+    ├ video                 (id)    --->      script.tg_script_video              L'automazione lancia il menu video in seguito al comando /video
+    ├ video_callback        (id)    --->      script.tg_script_video              L'automazione lancia il menu video in seguito al callback sul tasto Video
+    ├ video_soggiorno       (id)    --->      script.tg_script_video_soggiorno    L'automazione fa partire lo script di registrazione ed invio, poi ritorna al menu  
+    ├ video_cucina          (id)    --->      script.tg_script_video_cucina       L'automazione fa partire lo script di registrazione ed invio, poi ritorna al menu  
+    ├ video_camera          (id)    --->      script.tg_script_video_camera       L'automazione fa partire lo script di registrazione ed invio, poi ritorna al menu  
+    ├ video_cameretta       (id))   --->      script.tg_script_video_cameretta    L'automazione fa partire lo script di registrazione ed invio, poi ritorna al menu  
+    └ video_tutti           (id))   --->      tutti i precedenti in sequenza      L'automazione fa partire tutti gli script di registrazione ed invio dei video, poi ritorna al menu  
+

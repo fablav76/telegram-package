@@ -1,0 +1,265 @@
+# Questo script esegue i menu per la localizzazione dei dispositivi mobili .
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_locate.
+
+script:
+  tg_script_locate:
+    alias: tg script locate
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          title: "*Quale dispositivo vuoi tracciare?*"
+          message: >-
+            In questo menu é possibile ottenere la posizione di un dispositivo
+            registrato
+          inline_keyboard:
+            - '{{ "\U0001F466" }} iPhone Sergio:/locate_iphone'
+            - '{{ "\U0001F468" }} Pixel Fabio:/locate_pixel_7,{{ "\U0001F469" }} Oppo Giusy:/locate_oppo'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+################################# SERGIO #################################
+
+  tg_script_locate_iphone:
+    alias: tg script locate iphone
+    sequence:
+      - action: notify.mobile_app_iphone
+        data:
+          message: request_location_update
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          title: "*Attendere...*"
+          message: ...aggiorno i sensori di posizione
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 5
+      - action: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: "{{ trigger }}"
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001FA84" }} *POSIZIONE SERGIO*:
+
+            ----------------------------------
+
+            {% if states('person.sergio') == 'home' %} {{ "\U0001F3E0" }} Sergio é a *Casa*
+            {% elif states('person.sergio') == 'Ascea' %} {{ "\U0001F3D6" }} Sergio é al *Mare*
+            {% elif states('person.sergio') == 'Teatro Cilea' %} {{ "\U0001F3AD" }} Sergio é a *Teatro*
+            {% elif states('person.sergio') == 'not_home' %} {{ "\U0001F9F3" }} Sergio é *Fuori Casa*
+            {% endif %}{{'\n'}}
+
+            `{{ state_attr('sensor.iphone_geocoded_location','Name') }}`{{'\n'}}
+
+            La batteria del telefono é al *{{ states('sensor.iphone_battery_level') }}%*
+
+            Ultimo aggiornamento: *{{ ((as_timestamp(strptime(states('sensor.date_time'),
+            "%Y-%m-%d, %H:%M")) -
+            as_timestamp(states.device_tracker.iphone.last_changed)) / 60)
+            |round() }} minuti fa*
+          inline_keyboard:
+            - '{{ "\U0001F5FA\U0001F4CC" }} Mappa:/locate_iphone_map'
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_iphone'
+            - '{{ "\U0001F5FA" }} Torna indietro:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  tg_script_locate_iphone_map:
+    alias: tg script locate iphone map
+    sequence:
+      - action: telegram_bot.send_location
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          disable_notification: true
+          latitude: "{{ state_attr('device_tracker.iphone','latitude') }}"
+          longitude: "{{ state_attr('device_tracker.iphone','longitude') }}"
+          inline_keyboard:
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_iphone'
+            - '{{ "\U0001F5FA" }} Torna a Localizza disp.:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: Sergio è qui.
+          inline_keyboard:
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_iphone'
+            - '{{ "\U0001F5FA" }} Torna a Localizza disp.:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+################################# FABIO #################################
+
+  tg_script_locate_pixel_7:
+    alias: tg script locate pixel 7
+    sequence:
+      - action: notify.mobile_app_pixel_7
+        data:
+          message: command_high_accuracy_mode
+          data:
+            command: turn_on
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          title: "*Attendere...*"
+          message: ...aggiorno i sensori di posizione
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 5
+      - action: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: "{{ trigger }}"
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001FA84" }} *POSIZIONE FABIO*:
+
+            ----------------------------------
+
+            {% if states('person.fabio') == 'home' %} {{ "\U0001F3E0" }} Fabio é a *Casa* 
+            {% elif states('person.fabio') == 'Ascea' %} {{ "\U0001F3D6" }} Fabio é al *Mare*
+            {% elif states('person.fabio') == 'Teatro Cilea' %} {{ "\U0001F3AD" }} Fabio é a *Teatro*
+            {% elif states('person.fabio') == 'Ufficio' %} {{ "\U0001F3E2" }} Fabio é in *Ufficio*
+            {% elif states('person.fabio') == 'not_home' %} {{ "\U0001F9F3" }} Fabio é *Fuori Casa*
+            {% endif %}{{'\n'}}
+
+            `{{ states('sensor.pixel_7_geocoded_location') }}`{{'\n'}}
+
+            La batteria del telefono é al *{{ states('sensor.pixel_7_battery_level') }}%*
+
+            Lo stato del sensore alta precisione é *{{ states('binary_sensor.pixel_7_high_accuracy_mode') | upper }}*
+
+            Ultimo aggiornamento: *{{ ((as_timestamp(strptime(states('sensor.date_time'),
+            "%Y-%m-%d, %H:%M")) -
+            as_timestamp(states.device_tracker.pixel_7.last_changed)) / 60) | round() }} minuti fa*
+          inline_keyboard:
+            - '{{ "\U0001F5FA\U0001F4CC" }} Mappa:/locate_pixel_7_map'
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_pixel_7'
+            - '{{ "\U0001F5FA" }} Torna indietro:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+      - action: notify.mobile_app_pixel_7
+        data:
+          message: command_high_accuracy_mode
+          data:
+            command: turn_off
+
+  tg_script_locate_pixel_7_map:
+    alias: tg script locate pixel 7 map
+    sequence:
+      - action: telegram_bot.send_location
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          disable_notification: true
+          latitude: "{{ state_attr('device_tracker.pixel_7','latitude') }}"
+          longitude: "{{ state_attr('device_tracker.pixel_7','longitude') }}"
+          inline_keyboard:
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_pixel_7'
+            - '{{ "\U0001F5FA" }} Torna a Localizza disp.:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: Fabio è qui.
+          inline_keyboard:
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_pixel_7'
+            - '{{ "\U0001F5FA" }} Torna a Localizza disp.:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+################################# GIUSY #################################
+
+  tg_script_locate_oppo:
+    alias: tg script locate oppo
+    sequence:
+      - action: notify.mobile_app_oppo
+        data:
+          message: command_high_accuracy_mode
+          data:
+            command: turn_on
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          title: "*Attendere...*"
+          message: ...aggiorno i sensori di posizione
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 5
+      - action: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: "{{ trigger }}"
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001FA84" }} *POSIZIONE GIUSY*:
+
+            ----------------------------------
+
+            {% if states('person.giusy') == 'home' %} {{ "\U0001F3E0" }} Giusy é a *Casa*
+            {% elif states('person.giusy') == 'Ascea' %} {{ "\U0001F3D6" }} Giusy é al *Mare*
+            {% elif states('person.giusy') == 'Teatro Cilea' %} {{ "\U0001F3AD" }} Giusy é a *Teatro*
+            {% elif states('person.giusy') == 'not_home' %} {{ "\U0001F9F3" }} Giusy é *Fuori Casa*
+            {% endif %}{{'\n'}}
+
+            `{{ states('sensor.oppo_geocoded_location') }}`{{'\n'}}
+
+            La batteria del telefono é al *{{ states('sensor.oppo_battery_level') }}%*{{'\n'}}
+
+            Lo stato del sensore alta precisione é *{{ states('binary_sensor.oppo_high_accuracy_mode') | upper }}*
+
+            Ultimo aggiornamento: *{{ ((as_timestamp(strptime(states('sensor.date_time'),
+            "%Y-%m-%d, %H:%M")) -
+            as_timestamp(states.device_tracker.oppo.last_changed)) / 60) | round() }} minuti fa*
+          inline_keyboard:
+            - '{{ "\U0001F5FA\U0001F4CC" }} Mappa:/locate_oppo_map'
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_oppo'
+            - '{{ "\U0001F5FA" }} Torna indietro:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+      - action: notify.mobile_app_oppo
+        data:
+          message: command_high_accuracy_mode
+          data:
+            command: turn_off
+
+  tg_script_locate_oppo_map:
+    alias: tg script locate oppo map
+    sequence:
+      - action: telegram_bot.send_location
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          disable_notification: true
+          latitude: "{{ state_attr('device_tracker.oppo','latitude') }}"
+          longitude: "{{ state_attr('device_tracker.oppo','longitude') }}"
+          inline_keyboard:
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_oppo'
+            - '{{ "\U0001F5FA" }} Torna a Localizza disp.:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: Giusy è qui.
+          inline_keyboard:
+            - '{{ "\U0001F504" }} Aggiorna posizione:/locate_oppo'
+            - '{{ "\U0001F5FA" }} Torna a Localizza disp.:/locate'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'

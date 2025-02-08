@@ -1,0 +1,295 @@
+automation:
+  ############### Callback Snapshots
+  - id: tgsnapshots
+    alias: tg snapshots
+    ##hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /snapshots
+        id: snapshots
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /snapshots
+        id: snapshots_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /snap_soggiorno
+        id: snap_soggiorno
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /snap_porta
+        id: snap_porta
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /snap_cucina
+        id: snap_cucina
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /snap_cucina2
+        id: snap_cucina2
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /snap_camera
+        id: snap_camera
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /snap_cameretta
+        id: snap_cameretta
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /snap_tutti
+        id: snap_tutti
+    actions:
+      - choose:
+          ############### ID SNAPSHOTS ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snapshots
+            sequence:
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID SNAPSHOTS CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snapshots_callback
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### SNAP SOGGIORNO ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snap_soggiorno
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.soggiorno_onvif_profile000
+                data:
+                  filename: /config/media/cam/soggiorno.jpg
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/soggiorno.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Soggiorno {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### SNAP PORTA ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snap_porta
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.porta_ingresso
+                data:
+                  filename: /config/media/cam/porta.jpg
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/porta.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Porta di ingresso {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### SNAP CUCINA ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snap_cucina
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.cucina_onvif_profile000
+                data:
+                  filename: /config/media/cam/cucina.jpg
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/cucina.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Cucina {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### SNAP CUCINA2 ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snap_cucina2
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.cucina_acti
+                data:
+                  filename: /config/media/cam/cucina2.jpg
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/cucina2.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Cucina 2 {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### SNAP CAMERA ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snap_camera
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.camera_onvif_profile000
+                data:
+                  filename: /config/media/cam/camera.jpg
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/camera.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Camera {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### SNAP CAMERETTA ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snap_cameretta
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.cameretta_onvif_profile000
+                data:
+                  filename: /config/media/cam/cameretta.jpg
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/cameretta.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Cameretta {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### SNAP TUTTI ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - snap_tutti
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.porta_ingresso
+                data:
+                  filename: /config/media/cam/porta.jpg
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.soggiorno
+                data:
+                  filename: /config/media/cam/soggiorno.jpg
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.cucina
+                data:
+                  filename: /config/media/cam/cucina.jpg
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.cucina_acti
+                data:
+                  filename: /config/media/cam/cucina2.jpg
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.camera
+                data:
+                  filename: /config/media/cam/camera.jpg
+              - action: camera.snapshot
+                target:
+                  entity_id: camera.cameretta
+                data:
+                  filename: /config/media/cam/cameretta.jpg
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/porta.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Porta di ingresso {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/soggiorno.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/cucina.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Cucina {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/cucina2.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Cucina2 {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/camera.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Camera {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: telegram_bot.send_photo
+                data:
+                  file: /config/media/cam/cameretta.jpg
+                  target: "{{ trigger.event.data.user_id }}"
+                  caption: Cameretta {{ now().strftime("%m/%d/%Y - %H:%M:%S ") }}
+              - action: script.tg_script_snapshots
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"

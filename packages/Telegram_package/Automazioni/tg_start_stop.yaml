@@ -1,0 +1,54 @@
+automation:
+
+  - id: telegram_start
+    alias: tg start
+    #hide_entity: true
+    #initial_state: 'on'
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /start
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /start
+    actions:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          title: "Benvenuto in Home Assistant "
+          message: "*COMANDI DISPONIBILI:*"
+          target: "{{ trigger.event.data.user_id }}"
+          inline_keyboard:
+            - '{{ "\U0001F3E0" }} Stato casa:/casa'
+            - '{{ "\U0001F4A1" }} Luci:/luci,{{ "\U0001F441" }} Sensori:/sensori'
+            - '{{ "\U0001F6A8" }} Allarme:/alarm,{{ "\U00002709" }} Notifiche:/notify'
+            - '{{ "\U0001F4BB" }} Sistema:/sistema,{{ "\U0001F6E0" }} Servizi:/servizi'
+            - '{{ "\U0001F4F9" }} Videocamere:/video,{{ "\U0001F5FA" }} Localizza disp.:/locate'
+            - '{{ "\U0001F4F7" }} Snapshots:/snapshots,{{ "\U00002600" }} Meteo:/meteo'
+
+  - id: telegram_stop
+    alias: tg stop
+    trigger:
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /stop
+    actions:
+      - action: telegram_bot.delete_message
+        data:
+          message_id: '{{ trigger.event.data.message.message_id }}'
+          chat_id: "{{ trigger.event.data.user_id }}"
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message: "*PANNELLO DI CONTROLLO*"
+          target: "{{ trigger.event.data.user_id }}"
+          inline_keyboard:
+            - '{{ "\U0001F3E0" }} Stato casa:/casa'
+            - '{{ "\U0001F4A1" }} Luci:/luci,{{ "\U0001F441" }} Sensori:/sensori'
+            - '{{ "\U0001F6A8" }} Allarme:/alarm,{{ "\U00002709" }} Notifiche:/notify'
+            - '{{ "\U0001F4BB" }} Sistema:/sistema,{{ "\U0001F6E0" }} Servizi:/servizi'
+            - '{{ "\U0001F4F9" }} Videocamere:/video,{{ "\U0001F5FA" }} Localizza disp.:/locate'
+            - '{{ "\U0001F4F7" }} Snapshots:/snapshots,{{ "\U00002600" }} Meteo:/meteo'

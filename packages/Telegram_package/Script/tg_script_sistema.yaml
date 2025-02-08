@@ -1,0 +1,39 @@
+# Questo script manda il messaggio di riepilogo sullo stato del sistema.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_sistema.
+script:
+  tg_script_sistema:
+    alias: tg script sistema
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F4BB" }}  *SISTEMA*:
+
+            ----------------------------------
+
+            *Uso CPU*:   {{ states('sensor.processor_use') }} %
+
+            *Ultimo avvio*:   {{ states('sensor.last_boot') }}
+
+            *Tempo attivo*:   {{ states('sensor.tempo_avvio_server') }}
+
+            *Ultimo riavvio*: {{ states('sensor.template_tempo_di_avvio_homeassistant') }}
+
+            *Temp CPU*:   {{ states('sensor.cpu_temperatura') }} °C
+
+            *Memoria Libera*:   {{ states('sensor.memory_free') }} Mb
+
+            *Memoria Usata*:   {{ states('sensor.memory_use_percent') }} %
+
+            *Disco libero*:   {{ states('sensor.disk_free')}} Gb
+
+            *Disco utilizzato*:  {{ states('sensor.disk_use_percent')}} %
+
+          inline_keyboard:
+            - '{{ "\U0001F4A3"}} Riavvia Home Assistant:/restart_ha'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+

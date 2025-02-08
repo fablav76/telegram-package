@@ -1,0 +1,30 @@
+##########################################  PACKAGE TELEGRAM  ##########################################
+
+Questo package è suddiviso in 2 cartelle:
+la cartella Automations e la cartella Scripts.
+Nella cartella Automations ci sono le automazioni,
+che vengono eseguite quando si eseguono i comandi ed i callback.
+Nella cartella Scripts ci sono gli script che eseguono i menu
+che vengono visualizzati nella chat.
+Quindi in linea generale ho seguito questo schema
+1) digito /luci sulla chat
+2) parte l'automazione tg_luci perchè c'è un trigger con event_type: command corrispondente a /luci
+3) questo trigger ha id: luci
+4) piu in basso ci sono le actions, tra queste quella con id: luci
+5) subito sotto si vede la sequenza di azioni, la prima è un action: script_tg_script_luci
+  che esegue lo script tg_script_luci
+6) andando nel file tg_script_luci.yaml vediamo che non è altro che un telegram_bot.send_message
+  con il menu delle luci e la inline_keyboard per andare ai sottomenu delle stanze.
+
+Per i callback è la stessa cosa.
+1) schiaccio il pulsante Soggiorno
+2) parte il callback /soggiorno che scatena l'automazione tg_luci (sempre la stessa)
+  ma l'id stavolta è soggiorno
+3) nelle azioni in basso sotto id: soggiorno c'è prima un telegram_bot.delete_message
+  che cancella il menu luci e poi lo script tg_script_luci_soggiorno
+  (sta sempre nel file tg_script_luci.yaml, ma più giu) che fa partire il menu successivo,
+  cioe quello relativo alle luci del soggiorno.
+
+Rimando allo schema 6_automazioni.txt e 7_script.txt per maggiori informazioni sul loro concatenamento
+
+########################################## 

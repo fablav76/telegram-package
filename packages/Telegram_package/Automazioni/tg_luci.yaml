@@ -1,0 +1,1080 @@
+automation:
+  ############### Menù Luci
+  - id: tginfoluci
+    alias: tg luci
+    ##hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /luci
+        id: luci_command
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luci
+        id: luci_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luci_off
+        id: luci_off
+      ############### triggers soggiorno ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /soggiorno
+        id: soggiorno
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendisoggiorno
+        id: accendisoggiorno
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnisoggiorno
+        id: spegnisoggiorno
+      ############### triggers luci soggiorno ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_soggiorno
+        id: luce_soggiorno
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /led_soggiorno
+        id: led_soggiorno
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /lampada_soggiorno
+        id: lampada_soggiorno
+      ############### triggers cucina ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /cucina
+        id: cucina
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendicucina
+        id: accendicucina
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnicucina
+        id: spegnicucina
+      ############### triggers luci cucina ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_cucina
+        id: luce_cucina
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_ripostiglio
+        id: luce_ripostiglio
+      ############### triggers ingresso ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /ingresso
+        id: ingresso
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendiingresso
+        id: accendiingresso
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegniingresso
+        id: spegniingresso
+      ############### triggers luci ingresso ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_ingresso_1
+        id: luce_ingresso_1
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_ingresso_2
+        id: luce_ingresso_2
+      ############### triggers corridoio ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /corridoio
+        id: corridoio
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendicorridoio
+        id: accendicorridoio
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnicorridoio
+        id: spegnicorridoio
+      ############### triggers luci corridoio ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_armadio
+        id: luce_armadio
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_scarpiera
+        id: luce_scarpiera
+      ############### triggers camera matrimoniale ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /matrimoniale
+        id: matrimoniale
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendimatrimoniale
+        id: accendimatrimoniale
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnimatrimoniale
+        id: spegnimatrimoniale
+      ############### triggers luci camera matrimoniale ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_camera
+        id: luce_camera
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_comodino
+        id: luce_comodino
+      ############### triggers cameretta ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /cameretta
+        id: cameretta
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendicameretta
+        id: accendicameretta
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnicameretta
+        id: spegnicameretta
+      ############### triggers luci cameretta ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_cameretta
+        id: luce_cameretta
+      ############### triggers studio ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /studio
+        id: studio
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendistudio
+        id: accendistudio
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnistudio
+        id: spegnistudio
+      ############### triggers luci studio ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_studio
+        id: luce_studio
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_scrivania
+        id: luce_scrivania
+      ############### triggers bagni ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /bagni
+        id: bagni
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendibagni
+        id: accendibagni
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnibagni
+        id: spegnibagni
+      ############### triggers bagnogrande ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /bagnogrande
+        id: bagnogrande
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendibagnogrande
+        id: accendibagnogrande
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnibagnogrande
+        id: spegnibagnogrande
+      ############### triggers luci bagno grande ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_bagno_grande
+        id: luce_bagno_grande
+      ############### triggers bagnopiccolo ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /bagnopiccolo
+        id: bagnopiccolo
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /accendibagnopiccolo
+        id: accendibagnopiccolo
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /spegnibagnopiccolo
+        id: spegnibagnopiccolo
+      ############### triggers luci bagno piccolo ###############
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_bagno_piccolo
+        id: luce_bagno_piccolo
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /luce_specchio
+        id: luce_specchio
+    actions:
+      - choose:
+          ############### ID LUCI COMMAND ###############
+          - conditions:
+              - condition: trigger
+                id: luci_command
+            sequence:
+              - action: script.tg_script_luci
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID LUCI CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id: luci_callback
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID LUCI OFF CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id: luci_off
+            sequence:
+              - action: light.turn_off
+                entity_id: light.luci
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ SOGGIORNO
+          - conditions:
+              - condition: trigger
+                id: soggiorno
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_soggiorno
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI SOGGIORNO
+          - conditions:
+              - condition: trigger
+                id: accendisoggiorno
+            sequence:
+              - action: light.turn_on
+                entity_id: light.soggiorno
+              - action: script.tg_script_luci_soggiorno_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI SOGGIORNO
+          - conditions:
+              - condition: trigger
+                id: spegnisoggiorno
+            sequence:
+              - action: light.turn_off
+                entity_id: light.soggiorno
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_soggiorno_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE SOGGIORNO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_soggiorno
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_soggiorno
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_soggiorno_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LED SOGGIORNO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: led_soggiorno
+            sequence:
+              - action: light.toggle
+                entity_id: light.led_soggiorno
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_soggiorno_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LAMPADA SOGGIORNO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: lampada_soggiorno
+            sequence:
+              - action: light.toggle
+                entity_id: light.lampada_soggiorno
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_soggiorno_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ CUCINA
+          - conditions:
+              - condition: trigger
+                id: cucina
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_cucina
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI CUCINA
+          - conditions:
+              - condition: trigger
+                id: accendicucina
+            sequence:
+              - action: light.turn_on
+                entity_id: light.cucina
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_cucina_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI CUCINA
+          - conditions:
+              - condition: trigger
+                id: spegnicucina
+            sequence:
+              - action: light.turn_off
+                entity_id: light.cucina
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_cucina_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE CUCINA (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_cucina
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_cucina
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_cucina_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE RIPOSTIGLIO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_ripostiglio
+            sequence:
+              - action: light.toggle
+                entity_id: light.ripostiglio
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_cucina_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ INGRESSO
+          - conditions:
+              - condition: trigger
+                id: ingresso
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_ingresso
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI INGRESSO
+          - conditions:
+              - condition: trigger
+                id: accendiingresso
+            sequence:
+              - action: light.turn_on
+                entity_id: light.ingresso
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_ingresso_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI INGRESSO
+          - conditions:
+              - condition: trigger
+                id: spegniingresso
+            sequence:
+              - action: light.turn_off
+                entity_id: light.ingresso
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_ingresso_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE INGRESSO 1 (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_ingresso_1
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_ingresso_1
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_ingresso_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE INGRESSO 2 (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_ingresso_2
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_ingresso_2
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_ingresso_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ CORRIDOIO
+          - conditions:
+              - condition: trigger
+                id: corridoio
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_corridoio
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI CORRIDOIO
+          - conditions:
+              - condition: trigger
+                id: accendicorridoio
+            sequence:
+              - action: light.turn_on
+                entity_id: light.corridoio
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_corridoio_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI CORRIDOIO
+          - conditions:
+              - condition: trigger
+                id: spegnicorridoio
+            sequence:
+              - action: light.turn_off
+                entity_id: light.corridoio
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_corridoio_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE ARMADIO CORRIDOIO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_armadio
+            sequence:
+              - action: light.toggle
+                entity_id: light.armadio
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_corridoio_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE SCARPIERA CORRIDOIO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_scarpiera
+            sequence:
+              - action: light.toggle
+                entity_id: light.scarpiera
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_corridoio_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ CAMERA MATRIMONIALE
+          - conditions:
+              - condition: trigger
+                id: matrimoniale
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_camera
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI CAMERA
+          - conditions:
+              - condition: trigger
+                id: accendimatrimoniale
+            sequence:
+              - action: light.turn_on
+                entity_id: light.camera
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_camera_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI CAMERA
+          - conditions:
+              - condition: trigger
+                id: spegnimatrimoniale
+            sequence:
+              - action: light.turn_off
+                entity_id: light.camera
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_camera_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE CAMERA MATRIMONIALE (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_camera
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_camera
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_camera_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ COMODINO CAMERA MATRIMONIALE (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_comodino
+            sequence:
+              - action: light.toggle
+                entity_id: light.comodino
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_camera_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ CAMERETTA
+          - conditions:
+              - condition: trigger
+                id: cameretta
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_cameretta
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI CAMERETTA
+          - conditions:
+              - condition: trigger
+                id: accendicameretta
+            sequence:
+              - action: light.turn_on
+                entity_id: light.cameretta
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_cameretta_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI CAMERETTA
+          - conditions:
+              - condition: trigger
+                id: spegnicameretta
+            sequence:
+              - action: light.turn_off
+                entity_id: light.cameretta
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_cameretta_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE CAMERETTA (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_cameretta
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_cameretta
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_cameretta_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ STUDIO
+          - conditions:
+              - condition: trigger
+                id: studio
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_studio
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI STUDIO
+          - conditions:
+              - condition: trigger
+                id: accendistudio
+            sequence:
+              - action: light.turn_on
+                entity_id: light.studio
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_studio_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI STUDIO
+          - conditions:
+              - condition: trigger
+                id: spegnistudio
+            sequence:
+              - action: light.turn_off
+                entity_id: light.studio
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_studio_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE STUDIO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_studio
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_studio
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_studio_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE SCRIVANIA STUDIO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_scrivania
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_scrivania
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_studio_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ BAGNI
+          - conditions:
+              - condition: trigger
+                id: bagni
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_bagni
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI BAGNI
+          - conditions:
+              - condition: trigger
+                id: accendibagni
+            sequence:
+              - action: light.turn_on
+                entity_id: light.bagni
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagni_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI BAGNI
+          - conditions:
+              - condition: trigger
+                id: spegnibagni
+            sequence:
+              - action: light.turn_off
+                entity_id: light.bagni
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagni_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+
+          ################ BAGNO GRANDE
+          - conditions:
+              - condition: trigger
+                id: bagnogrande
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_bagno_grande
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI BAGNO GRANDE
+          - conditions:
+              - condition: trigger
+                id: accendibagnogrande
+            sequence:
+              - action: light.turn_on
+                entity_id: light.bagno_grande
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagno_grande_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI BAGNO GRANDE
+          - conditions:
+              - condition: trigger
+                id: spegnibagnogrande
+            sequence:
+              - action: light.turn_off
+                entity_id: light.bagno_grande
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagno_grande_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE BAGNO GRANDE (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_bagno_grande
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_bagno_grande
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagno_grande_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ BAGNO PICCOLO
+          - conditions:
+              - condition: trigger
+                id: bagnopiccolo
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_luci_bagno_piccolo
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ################ ACCENDI BAGNO PICCOLO
+          - conditions:
+              - condition: trigger
+                id: accendibagnopiccolo
+            sequence:
+              - action: light.turn_on
+                entity_id: light.bagno_piccolo
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagno_piccolo_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ SPEGNI BAGNO PICCOLO
+          - conditions:
+              - condition: trigger
+                id: spegnibagnopiccolo
+            sequence:
+              - action: light.turn_off
+                entity_id: light.bagno_piccolo
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagno_piccolo_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE BAGNO PICCOLO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_bagno_piccolo
+            sequence:
+              - action: light.toggle
+                entity_id: light.luce_bagno_piccolo
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagno_piccolo_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+          ################ LUCE SPECCHIO BAGNO PICCOLO (luce singola - azione toggle)
+          - conditions:
+              - condition: trigger
+                id: luce_specchio
+            sequence:
+              - action: light.toggle
+                entity_id: light.specchio_bagno_piccolo
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_luci_bagno_piccolo_edit
+                metadata: {}
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"

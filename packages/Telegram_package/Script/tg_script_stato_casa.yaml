@@ -1,0 +1,139 @@
+# Questo script manda il messaggio di riepilogo sullo stato della casa.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_stato casa.
+# Cambiare l'entita alarm_control_panel.home con la vostra
+# alla riga 29
+# sensor.temperatura_media riga 35
+# sensor.umidita_media riga 37
+# sensor.numero_luci_accese riga 39
+# sensor.elenco_luci_accese riga 48
+# sensor.numero_switch_accesi riga 51
+# sensor.elenco_switch_accesi riga 60
+# light.luci righe 72 91 109
+# switch.switch righe 75 94 112
+
+script:
+  tg_script_stato_casa:
+    alias: tg script stato casa
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F3E0" }} *STATO CASA:*
+
+            ------------------------------------------------
+
+            L'allarme domestico {{ states('alarm_control_panel.home')
+            | replace("armed_home","é inserito (*su Casa*).")
+            | replace("disarmed","é *spento*.")
+            | replace("arming","*si sta per inserire*.")
+            | replace("armed_away", "é inserito (*Fuori Casa*).") }}
+
+            In casa la temperatura é di {{ states('sensor.temperatura_media') | round(0) }} °C
+            {{'\n'}}
+            e l'umidità é di {{ states('sensor.umidita_media') | round(0)}} %
+            {{'\n'}}{{'\n'}}
+            {% set light_count = states('sensor.numero_luci_accese')|int %}
+            {% if light_count == 0 %}
+            {{"\U0001F44D"}} Le luci sono spente.{{'\n'}}{{'\n'}}
+            {% else %}
+            {% if light_count == 1 %}
+            {{"\U0001F6A8"}} *C'é 1 luce accesa:*{{'\n'}}{{'\n'}}
+            {% elif light_count > 1 %}
+            {{"\U0001F6A8"}} *Ci sono {{ light_count }} luci accese:*{{'\n'}}{{'\n'}}
+            {% endif %}
+            {{states('sensor.elenco_luci_accese')}}
+            {{'\n'}}{{'\n'}}
+            {% endif %}
+            {% set switch_count = states('sensor.numero_switch_accesi')|int %}
+            {% if switch_count == 0 %}
+            {{"\U0001F44D"}} Gli interruttori sono spenti.{{'\n'}}{{'\n'}}
+            {% else %}
+            {% if switch_count == 1 %}
+            {{"\U0001F6A8"}} *C'é 1 interruttore acceso:*{{'\n'}}{{'\n'}}
+            {% elif switch_count > 1 %}
+            {{"\U0001F6A8"}} *Ci sono {{ switch_count }} interruttori accesi:*{{'\n'}}{{'\n'}}
+            {% endif %}
+            {{states('sensor.elenco_switch_accesi')}}
+            {% endif %}
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 3
+          milliseconds: 0
+      - choose:
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: light.luci
+                    state: "on"
+                  - condition: state
+                    entity_id: switch.switch
+                    state: "on"
+            sequence:
+              - action: telegram_bot.edit_replymarkup
+                metadata: {}
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger }}"
+                  inline_keyboard:
+                    - '{{ "\U0001F4A1" }} Spegni le luci:/light_off, {{ "\U0001F503" }} Spegni gli interruttori:/switch_off'
+                    - '{{ "\U0001F4A1" }}{{ "\U0001F503" }} Spegni tutto:/all_off'
+                    - '{{ "\u21a9\ufe0f" }} No:/stop'
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: light.luci
+                    state: "on"
+                  - condition: state
+                    entity_id: switch.switch
+                    state: "off"
+            sequence:
+              - action: telegram_bot.edit_replymarkup
+                metadata: {}
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger }}"
+                  inline_keyboard:
+                    - '{{ "\U0001F4A1" }} Spegni le luci:/light_off'
+                    - '{{ "\u21a9\ufe0f" }} Menu Principale:/stop'
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: light.luci
+                    state: "off"
+                  - condition: state
+                    entity_id: switch.switch
+                    state: "on"
+            sequence:
+              - action: telegram_bot.edit_replymarkup
+                metadata: {}
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger }}"
+                  inline_keyboard:
+                    - '{{ "\U0001F503" }} Spegni gli interruttori:/switch_off'
+                    - '{{ "\u21a9\ufe0f" }} Menu Principale:/stop'
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: light.luci
+                    state: "off"
+                  - condition: state
+                    entity_id: switch.switch
+                    state: "off"
+            sequence:
+              - action: telegram_bot.edit_replymarkup
+                metadata: {}
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger }}"
+                  inline_keyboard:
+                    - '{{ "\u21a9\ufe0f" }} Menu Principale:/stop'

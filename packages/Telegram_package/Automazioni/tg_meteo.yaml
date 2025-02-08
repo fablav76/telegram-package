@@ -1,0 +1,42 @@
+automation:
+  - id: tgmeteo
+    alias: tg meteo
+    #hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /meteo
+        id: meteo
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /meteo
+        id: meteo_callback
+    actions:
+      - choose:
+          ############### ID METEO ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - meteo
+            sequence:
+              - action: script.tg_script_meteo
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID METEO CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - meteo_callback
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_meteo
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+

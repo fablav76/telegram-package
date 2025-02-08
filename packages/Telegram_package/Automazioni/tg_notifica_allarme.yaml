@@ -1,0 +1,66 @@
+# Cambiare l'entita alarm_control_panel.home con la vostra
+# alle righe 14 19 24
+# cambiare notify.fabio_telegram con il vostro servizio notify di Telegram
+# come spiegato nei pre requisiti.
+
+automation:
+  ############### Notifica Allarme Inserito/Disinserito
+  - id: tgnotificainfoallarme
+    alias: tg notifica allarme
+    ##hide_entity: true
+    triggers:
+      - trigger: state
+        entity_id:
+          - alarm_control_panel.home
+        to: disarmed
+        id: alarm-disarmed
+      - trigger: state
+        entity_id:
+          - alarm_control_panel.home
+        to: armed_home
+        id: alarm-armed-home
+      - trigger: state
+        entity_id:
+          - alarm_control_panel.home
+        to: armed_away
+        id: alarm-armed-away
+    actions:
+      - choose:
+          ############### ID ALARM DISARMED ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm-disarmed
+            sequence:
+              - action: notify.fabio_telegram
+                data:
+                  message: >-
+                    *Allarme disattivato*
+                    {{'\n'}}
+                    alle ore {{ states('sensor.time') }}
+
+          ############### ID ALARM ARMED HOME ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm-armed-home
+            sequence:
+              - action: notify.fabio_telegram
+                data:
+                  message: >-
+                    *Allarme attivato (HOME)*
+                    {{'\n'}}
+                    alle ore {{ states('sensor.time') }}
+
+          ############### ID ALARM ARMED AWAY ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm-armed-away
+            sequence:
+              - action: notify.fabio_telegram
+                data:
+                  message: >-
+                    *ALLARME ATTIVATO (FUORI CASA)*
+                    {{'\n'}}
+                    alle ore {{ states('sensor.time') }}

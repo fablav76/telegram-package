@@ -1,0 +1,125 @@
+##########################################  COME FUNZIONA TELEGRAM?  ##########################################
+Fondamentalmente i messaggi su Telegram possono essere
+ricevuti eseguendo diverse azioni da Home Assistant:
+1) telegram_bot.send_message invia un messaggio
+2) telegram_bot.edit_message modifica un messaggio gia inviato
+3) telegram_bot.delete_message elimina un messaggio gia inviato
+4) telegram_bot.edit_replymarkup modifica i pulsanti di callback sotto al messaggio gia inviato
+5) telegram_bot.edit_caption modifica la didascalia sotto ad una foto o un video
+6) telegram_bot.send_photo invia una foto
+7) telegram_bot.send_video invia un video
+8) telegram_bot.send_location invia la posizione di un dispositivo
+9) telegram_bot.answer_callback_query risponde ad una richiesta di callback generando un alert
+10) telegram_bot.leave_chat abbandona la chat (non fatelo :) )
+
+in questo package li ho utilizzati quasi tutti tranne
+answer_callback_query, edit_caption e leave chat (ovviamente).
+
+Analizziamoli in dettaglio:
+
+1) telegram_bot.send_message
+
+    Per inviare un messaggio nella chat di Fabio possiamo utilizzare 2 azioni:
+
+    actions:
+      - action: notify.fabio_telegram
+        data:
+          title: "Example Message"
+          message: 'Message with *BOLD*, _ITALIC_ and `MONOSPACE` Text'
+
+    oppure
+
+    actions:
+      - action: telegram_bot.send_message
+        data:
+          title: "Example Message"
+          target: "3175824532"
+          message: 'Message with *BOLD*, _ITALIC_ and `MONOSPACE` Text'
+
+    dove 3175824532 ê il chat_id di fabio_telegram (numero inventato)
+
+    la differenza tra queste 2 azioni è che la seconda è piu flessibile
+    e può essere utilizzato nelle automazioni con comandi e callback, mandando il messaggio alla chat giusta,
+    dove ê stata generata la richiesta.
+
+    Infatti quando nella chat di Telegram digitiamo un comando /start per esempio
+    o clicchiamo su un pulsante sotto ad un messaggio (callback)
+    si genera un evento in Home Assistant che possiamo utilizzare come trigger (evento Quando) in un'automazione.
+    Ecco 2 esempi:
+
+      triggers:
+        - trigger: event
+          event_type: telegram_command
+          event_data:
+            command: "/start"
+
+      triggers:
+        - trigger: event
+          event_type: telegram_callback
+          event_data:
+            data: "/click"
+
+    Contemporaneamente a questo viene registrata anche la chat_id e l'user_id
+    Quindi nelle azioni successive utilizzando questo target
+
+      actions:
+        - action: telegram_bot.send_message
+              data:
+                title: "*Dumb automation*"
+                target: "{{ trigger.event.data.user_id }}"
+                message: 'Message with *BOLD*, _ITALIC_ and `MONOSPACE` Text'
+
+    invieremo il messaggio di risposta nella stessa chat e non ad altri utenti
+
+2) telegram_bot.edit_message
+
+    Con questa azione possiamo modificare il messaggio inviato in precedenza
+    Obbligatorio inserire chat_id, message_id e message
+
+        - action: telegram_bot.edit_message
+          metadata: {}
+          data:
+            message_id: "{{ trigger.event.data.message.message_id }}"
+            chat_id: "{{ trigger.event.data.user_id }}"
+            message: 'Message with *BOLD* Text'
+          
+    message_id è l'identificativo del messaggio inviato
+    "{{ trigger.event.data.message.message_id }}" sta ad indicare proprio il messaggio inviato
+    dal bot in seguito all'evento trigger.
+
+    chat_id è invece la chat dell'utente dove il messaggio era stato inviato,
+    infatti è sempre "{{ trigger.event.data.user_id }}"
+
+3) telegram_bot.delete_message
+
+    Con questa azione possiamo eliminare un messaggio inviato in precedenza.
+    La sintassi è identica a telegram_bot.edit_message
+    Obbligatorio inserire chat_id e message_id
+
+4) telegram_bot.edit_replymarkup
+
+    Modifica la tastiera in linea (inline_keyboard) di un messaggio inviato in precedenza.
+    Obbligatorio inserire chat_id, message_id
+    Le tastiera in linea non sono altro che quei pulsanti posti sotto ad
+    un messaggio che consentono, pigiandoli di far partire altre automazioni con i loro callback
+    Questo è un esempio di tastiera in linea:
+
+      inline_keyboard:
+        - '{{ "\U0001F3E0" }} Stato casa:/casa'
+        - '{{ "\U0001F4A1" }} Luci:/luci,{{ "\U0001F441" }} Sensori:/sensori'
+        - '{{ "\U0001F6A8" }} Allarme:/alarm,{{ "\U00002709" }} Notifiche:/notify'
+        - '{{ "\U0001F4BB" }} Sistema:/sistema,{{ "\U0001F6E0" }} Servizi:/servizi'
+        - '{{ "\U0001F4F9" }} Videocamere:/video,{{ "\U0001F5FA" }} Localizza disp.:/locate'
+        - '{{ "\U0001F4F7" }} Snapshots:/snapshots,{{ "\U00002600" }} Meteo:/meteo'
+
+    Stato casa è ciò che appare sul pulsante
+    /casa è il callback che torna ad Home assistant come evento.
+
+{{ "\U0001F3E0" }} sono icone, i codici si possono prendere da questo sito:
+https://unicode.org/emoji/charts/full-emoji-list.html
+e poi sostituire il + con 3 zeri ( l'icona della casa infatti è U+1F3E0 )
+
+5) telegram_bot.edit_caption
+
+    Questa azione modifica la didascalia sotto ad una foto o un video inviato in precedenza
+    Obbligatorio inserire chat_id, message_id e caption

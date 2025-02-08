@@ -1,0 +1,211 @@
+automation:
+  ############### Callback Notifiche
+  - id: tginfonotifiche
+    alias: tg notifiche
+    ##hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /notify
+        id: notify
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /notify
+        id: notify_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /telegram_off
+        id: telegram_off
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /telegram_on
+        id: telegram_on
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /app_companion_off
+        id: app_companion_off
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /app_companion_on
+        id: app_companion_on
+    actions:
+      - choose:
+          ############### ID NOTIFY ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - notify
+            sequence:
+              - action: script.tg_script_notifiche
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID NOTIFY CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - notify_callback
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_notifiche
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID TELEGRAM OFF ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - telegram_off
+            sequence:
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.telegram
+                data: {}
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  message: OK, ho *disattivato* le notifiche Telegram
+                  target: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_notifiche
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID TELEGRAM ON ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - telegram_on
+            sequence:
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.telegram
+                data: {}
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  message: OK, ho *attivato* le notifiche Telegram
+                  target: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_notifiche
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID APP COMPANION OFF ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - app_companion_off
+            sequence:
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.notifiche_in_app
+                data: {}
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: OK, ho *disattivato* le notifiche dell'app Companion
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_notifiche
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID APP COMPANION ON ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - app_companion_on
+            sequence:
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.notifiche_in_app
+                data: {}
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: OK, ho *attivato* le notifiche dell'app Companion
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_notifiche
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"

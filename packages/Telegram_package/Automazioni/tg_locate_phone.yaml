@@ -1,0 +1,155 @@
+automation:
+  - id: tg locate
+    alias: tg locate
+    #hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /locate
+        id: locate
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /locate
+        id: locate_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /locate_iphone
+        id: locate_iphone
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /locate_iphone_map
+        id: locate_iphone_map
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /locate_pixel_7
+        id: locate_pixel_7
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /locate_pixel_7_map
+        id: locate_pixel_7_map
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /locate_oppo
+        id: locate_oppo
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /locate_oppo_map
+        id: locate_oppo_map
+    actions:
+      choose:
+        ############### ID LOCATE ###############
+        - conditions:
+            - condition: trigger
+              id: locate
+          sequence:
+            - action: script.tg_script_locate
+              metadata: {}
+              data:
+                trigger: "{{ trigger.event.data.user_id }}"
+
+        ############### ID LOCATE CALLBACK ###############
+        - conditions:
+            - condition: trigger
+              id: locate_callback
+          sequence:
+            - action: telegram_bot.delete_message
+              data:
+                message_id: "{{ trigger.event.data.message.message_id }}"
+                chat_id: "{{ trigger.event.data.user_id }}"
+            - action: script.tg_script_locate
+              metadata: {}
+              data:
+                trigger: "{{ trigger.event.data.user_id }}"
+
+
+        ############### ID LOCATE IPHONE ###############
+        - conditions:
+            - condition: trigger
+              id: locate_iphone
+          sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_locate_iphone
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+        ############### ID LOCATE IPHONE MAP ###############
+        - conditions:
+            - condition: trigger
+              id: locate_iphone_map
+          sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_locate_iphone_map
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+        ############### ID LOCATE PIXEL 7 ###############
+        - conditions:
+            - condition: trigger
+              id: locate_pixel_7
+          sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_locate_pixel_7
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+        ############### ID LOCATE PIXEL MAP ###############
+        - conditions:
+            - condition: trigger
+              id: locate_pixel_7_map
+          sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_locate_pixel_7_map
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+        ############### ID LOCATE OPPO ###############
+        - conditions:
+            - condition: trigger
+              id: locate_oppo
+          sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_locate_oppo
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+        ############### ID LOCATE OPPO MAP ###############
+        - conditions:
+            - condition: trigger
+              id: locate_oppo_map
+          sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_locate_oppo_map
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"

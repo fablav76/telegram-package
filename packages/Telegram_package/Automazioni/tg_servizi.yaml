@@ -1,0 +1,82 @@
+automation:
+  - id: tgservizi
+    alias: tg servizi
+    #hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /servizi
+        id: servizi
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /servizi
+        id: servizi_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /reload_localtuya
+        id: localtuya
+
+    actions:
+      - choose:
+          ############### ID SERVIZI ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - servizi
+            sequence:
+              - action: script.tg_script_servizi
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID SERVIZI CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - servizi_callback
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_servizi
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID LOCALTUYA ###############
+          - conditions:
+              - condition: trigger
+                id: localtuya
+            sequence:
+              - action: localtuya.reload
+                data: {}
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: >-
+                    OK, Ricarico l'integrazione localtuya
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_servizi
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"

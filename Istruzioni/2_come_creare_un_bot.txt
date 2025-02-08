@@ -1,0 +1,28 @@
+##########################################  COME CREARE IL BOT TELEGRAM?  ##########################################
+
+Cercare BotFather in Telegram e digitare in sequenza
+
+/start        si avvia la procedura
+/newbot       crea un nuovo bot
+nome          digitare il nome che vogliamo dare al bot
+username_bot  digitare una username (deve terminare con_bot)
+
+a questo punto BotFather ci avvisa che il bot è creato e raggiungibile all'indirizzo t.me/username_bot
+e ci fornisce anche l'api key.
+Se volete personalizzarlo con nome, foto, etc digitate /mybots 
+Se vi siete persi l'api key con /mybot potete recuperarla.
+Se volete far comparire un Menu con una lista di comandi principali a fianco alla casella di digitazione 
+scrivere /setcommands ed inserire per ogni riga il comando seguito da - e da come deve apparire.
+Per esempio:
+
+start - Menu
+casa - Stato Casa
+alarm - Allarme
+video - Video
+locate - Localizza dispositivo
+
+#####################################  COME RECUPERARE IL PROPRIO CHAT ID?  #####################################
+
+Il chat id non é altro che il proprio id su tutto Telegram. La parola chat é fuorviante 😂
+Recuperare il proprio chat id é facilissimo.
+Cercate Get ID bot su Telegram e digitate /start /myid oppure /get_id

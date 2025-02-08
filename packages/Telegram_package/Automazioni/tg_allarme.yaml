@@ -1,0 +1,303 @@
+# Cambiare l'entita alarm_control_panel.home con la vostra
+# alle righe 100 144 187
+# CAMBIARE I CODICI DI ALLARME code
+# alle righe 102 146 189
+
+automation:
+  ############### Callback Allarme
+  - id: tginfoallarme
+    alias: tg allarme
+    ##hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /alarm
+        id: alarm_command
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /alarm
+        id: alarm_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /alarm-disarm
+        id: alarm-disarm
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /alarm-arm-home
+        id: alarm-arm-home
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /alarm-arm-away
+        id: alarm-arm-away
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /alarm-total
+        id: alarm-total
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /sirena
+        id: sirena
+    actions:
+      - choose:
+          ############### ID ALARM COMMAND ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm_command
+            sequence:
+              - action: script.tg_script_allarme
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID ALARM CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm_callback
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_allarme
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID ALARM DISARM ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm-disarm
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: OK, disattivo l'allarme
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: alarm_control_panel.alarm_disarm
+                target:
+                  entity_id: alarm_control_panel.home
+                data:
+                  code: "1234"
+              - wait_for_trigger:
+                  - trigger: state
+                    entity_id:
+                      - alarm_control_panel.home
+                    to: disarmed
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_allarme
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID ALARM ARM HOME ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm-arm-home
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: OK, attivo l'allarme
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: alarm_control_panel.alarm_arm_home
+                target:
+                  entity_id: alarm_control_panel.home
+                data:
+                  code: "1234"
+              - wait_for_trigger:
+                  - trigger: state
+                    entity_id:
+                      - alarm_control_panel.home
+                    to: armed_home
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_allarme
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID ALARM ARM AWAY ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm-arm-away
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: >-
+                    *OK, ATTIVO L'ALLARME*
+                    {{'\n'}}
+                    Hai 20 secondi per uscire di casa.
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 3
+                  milliseconds: 0
+              - action: alarm_control_panel.alarm_arm_away
+                target:
+                  entity_id: alarm_control_panel.home
+                data:
+                  code: "1234"
+              - wait_for_trigger:
+                  - trigger: state
+                    entity_id:
+                      - alarm_control_panel.home
+                    to: armed_away
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_allarme
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID ALLARME TOTALE TOGGLE ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - alarm-total
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: input_boolean.toggle
+                data: {}
+                target:
+                  entity_id: input_boolean.allarme
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: |
+                    {% if states('input_boolean.sirena','on') %}
+                    {{"\U0001F534"}} OK, Allarme Totale Inserito!
+                    {% else %}
+                    {{"\U0001F7E2"}} OK, Allarme Totale Disinserito!
+                    {% endif %}
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_allarme
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID SIRENA TOGGLE ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - sirena
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: input_boolean.toggle
+                data: {}
+                target:
+                  entity_id: input_boolean.sirena
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: |
+                    {% if states('input_boolean.sirena','on') %}
+                    {{"\U0001F4E2"}} OK, Sirena Attivata!
+                    {% else %}
+                    {{"\U0001F507"}} OK, Sirena Disattivata!
+                    {% endif %}
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - action: script.tg_script_allarme
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"

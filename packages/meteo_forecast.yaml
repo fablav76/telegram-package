@@ -1,0 +1,494 @@
+template:
+  - unique_id: meteo_casa
+    trigger:
+      - trigger: time_pattern
+        hours: /1
+      - trigger: homeassistant
+        event: start
+      - trigger: event
+        event_type: event_template_reloaded
+    action:
+      - action: weather.get_forecasts
+        target:
+          entity_id:
+            - weather.forecast_casa
+            - weather.openweathermap
+        data:
+          type: hourly
+        response_variable: hourly_forecast
+      - action: weather.get_forecasts
+        target:
+          entity_id:
+            - weather.forecast_casa
+            - weather.openweathermap
+        data:
+          type: daily
+        response_variable: daily_forecast
+
+    sensor:
+      ##########################      Meteo giornaliero     #########################
+      - name: "meteo giornaliero"
+        unique_id: meteo_giornaliero
+        state: "{{ states('weather.forecast_casa') }}"
+        attributes:
+          temperature: "{{ state_attr('weather.forecast_casa', 'temperature') }}"
+          dew_point: "{{ state_attr('weather.forecast_casa', 'dew_point') }}"
+          temperature_unit: "{{ state_attr('weather.forecast_casa', 'temperature_unit') }}"
+          humidity: "{{ state_attr('weather.forecast_casa', 'humidity') }}"
+          cloud_coverage: "{{ state_attr('weather.forecast_casa', 'cloud_coverage') }}"
+          pressure: "{{ state_attr('weather.forecast_casa', 'pressure') }}"
+          pressure_unit: "{{ state_attr('weather.forecast_casa', 'pressure_unit') }}"
+          wind_bearing: "{{ state_attr('weather.forecast_casa', 'wind_bearing') }}"
+          wind_speed: "{{ state_attr('weather.forecast_casa', 'wind_speed') }}"
+          wind_speed_unit: "{{ state_attr('weather.forecast_casa', 'wind_speed_unit') }}"
+          forecast: "{{ daily_forecast['weather.forecast_casa'].forecast[:24] }}"
+          day0: >
+            {%- set state =  daily_forecast['weather.forecast_casa'].forecast[0].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          day1: >
+            {%- set state =  daily_forecast['weather.forecast_casa'].forecast[1].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          day2: >
+            {%- set state =  daily_forecast['weather.forecast_casa'].forecast[2].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          day3: >
+            {%- set state =  daily_forecast['weather.forecast_casa'].forecast[3].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          day4: >
+            {%- set state =  daily_forecast['weather.forecast_casa'].forecast[4].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          day5: >
+            {%- set state =  daily_forecast['weather.forecast_casa'].forecast[5].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+      ##########################      Meteo orario     ##########################
+      - name: meteo orario
+        unique_id: meteo orario
+        state: "{{ states('weather.openweathermap') }}"
+        attributes:
+          temperature: "{{ state_attr('weather.openweathermap', 'temperature') }}"
+          apparent_temperature: "{{ state_attr('weather.openweathermap', 'apparent_temperature') }}"
+          dew_point: "{{ state_attr('weather.openweathermap', 'dew_point') }}"
+          temperature_unit: "{{ state_attr('weather.openweathermap', 'temperature_unit') }}"
+          humidity: "{{ state_attr('weather.openweathermap', 'humidity') }}"
+          cloud_coverage: "{{ state_attr('weather.openweathermap', 'cloud_coverage') }}"
+          pressure: "{{ state_attr('weather.openweathermap', 'pressure') }}"
+          pressure_unit: "{{ state_attr('weather.openweathermap', 'pressure_unit') }}"
+          wind_bearing: "{{ state_attr('weather.openweathermap', 'wind_bearing') }}"
+          wind_speed: "{{ state_attr('weather.openweathermap', 'wind_speed') }}"
+          wind_speed_unit: "{{ state_attr('weather.openweathermap', 'wind_speed_unit') }}"
+          forecast: "{{ hourly_forecast['weather.openweathermap'].forecast[:24] }}"
+          hour0: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[0].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          hour1: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[1].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          hour2: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[2].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          hour3: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[3].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          hour4: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[4].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          hour5: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[5].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          hour6: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[6].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          hour7: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[7].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          hour8: >
+            {%- set state =  hourly_forecast['weather.openweathermap'].forecast[8].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+      ########################## Meteo icon giornaliero ##########################
+      - name: "meteo icon giornaliero"
+        unique_id: "meteo_icon_giornaliero"
+        state: >
+          {% set meteo = states('sensor.meteo_giornaliero') %}
+          {% if is_state('sun.sun', 'above_horizon') %}
+          {{ '/local/ic/weather_icons/animated/' + meteo + '.svg' }}
+          {% else %}
+          {{ '/local/ic/weather_icons/animated/' + meteo + '_night.svg' }}
+          {% endif %}
+        attributes:
+          temp: >
+            {{ state_attr('sensor.meteo_giornaliero', 'temperature') }}
+          percepita: >
+            {% set T = (state_attr('sensor.meteo_giornaliero', 'temperature') | float) %}
+            {% set K = (state_attr('sensor.meteo_giornaliero', 'wind_speed') | float)/3.6 %}
+            {% set V = (K/1000*60*60) %}
+            {% set A = 13.12 + 0.6215*T - 11.37*(V**0.16) + 0.3965*T*(V**0.16) %}
+            {{ (A) | round(1) }}
+          desc: >
+            {%- set state = state_attr('sensor.meteo_giornaliero', 'forecast')[0].condition -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          precipitation: >
+            {{ state_attr('sensor.meteo_giornaliero', 'forecast')[0].precipitation }}
+          precipitation_percent: >
+            {{ states('sensor.openweathermap_forecast_precipitation_probability') }}
+          wind_dir: >
+            {% set direction = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'] %}
+            {%set degree = state_attr('sensor.meteo_giornaliero', 'wind_bearing') | float %}
+            {{direction[((degree+11.25)/22.5) |int] }}
+          wind_speed: >
+            {% set sensor = state_attr('sensor.meteo_giornaliero', 'wind_speed') | float %}
+            {{ (sensor / 3.6) | round(1) }}
+          wind_desc: >
+            {% set sensor = state_attr('sensor.meteo_giornaliero', 'wind_speed') | float %}
+            {% if sensor > 0 and sensor < 6.99 %}
+            Calmo
+            {% elif sensor > 7 and sensor < 11.99 %}
+            Aria leggera
+            {% elif sensor > 12 and sensor < 19.99 %}
+            Leggera brezza
+            {% elif sensor > 20 and sensor < 29.99 %}
+            Brezza moderata
+            {% elif sensor > 30 and sensor < 39.99 %}
+            Vento fresco
+            {% elif sensor > 40 and sensor < 50.99 %}
+            Forte vento
+            {% elif sensor > 51 and sensor < 62.99 %}
+            Vicino a burrasca
+            {% elif sensor > 63 and sensor < 75.99 %}
+            Burrasca
+            {% elif sensor > 76 and sensor < 87.99 %}
+            Forte burrasca
+            {% elif sensor > 88 and sensor < 102.99 %}
+            Tempesta
+            {% elif sensor > 103 and sensor < 117.99 %}
+            Forte Tempesta
+            {% else %}
+            Uragano
+            {% endif %}
+      ########################## Meteo icon orario ##########################
+      - name: "meteo icon orario"
+        unique_id: "meteo_icon_orario"
+        state: >
+          {% set meteo = states('sensor.meteo_orario') %}
+          {% if is_state('sun.sun', 'above_horizon') %}
+          {{ '/local/ic/weather_icons/animated/' + meteo + '.svg' }}
+          {% else %}
+          {{ '/local/ic/weather_icons/animated/' + meteo + '_night.svg' }}
+          {% endif %}
+        attributes:
+          temp: >
+            {{ state_attr('sensor.meteo_orario', 'temperature') }}
+          percepita: >
+            {{ state_attr('sensor.meteo_orario', 'apparent_temperature') }}
+          desc: >
+            {%- set state = states('sensor.meteo_orario') -%}
+            {% if state == 'clear-night' %} notte limpida
+            {% elif state == 'cloudy' %} nuvoloso
+            {% elif state == 'exceptional' %} eccezionale
+            {% elif state == 'fog' %} nebbia
+            {% elif state == 'hail' %} grandine
+            {% elif state == 'lightning' %} temporale
+            {% elif state == 'lightning-rainy' %} pioggie e fulmini
+            {% elif state == 'partlycloudy' %} parz. nuvoloso
+            {% elif state == 'pouring' %} torrenziale
+            {% elif state == 'rainy' %} piovoso
+            {% elif state == 'snowy' %} nevoso
+            {% elif state == 'snowy-rainy' %} pioggia e neve
+            {% elif state == 'sunny' %} soleggiato
+            {% elif state == 'windy' %} ventoso
+            {% elif state == 'windy-variant' %} vento variabile
+            {% else %} non disponibile
+            {% endif %}
+          precipitation: >
+            {{ state_attr('sensor.meteo_orario', 'forecast')[0].precipitation }}
+          precipitation_percent: >
+            {{ state_attr('sensor.meteo_orario', 'forecast')[0].precipitation_probability }}
+          wind_dir: >
+            {% set direction = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'] %}
+            {%set degree = state_attr('sensor.meteo_orario', 'wind_bearing') | float %}
+            {{direction[((degree+11.25)/22.5) |int] }}
+          wind_speed: >
+            {% set sensor = state_attr('sensor.meteo_orario', 'wind_speed') | float %}
+            {{ (sensor / 3.6) | round(1) }}
+          wind_desc: >
+            {% set sensor = state_attr('sensor.meteo_orario', 'wind_speed') | float %}
+            {% if sensor > 0 and sensor < 6.99 %}
+            Calmo
+            {% elif sensor > 7 and sensor < 11.99 %}
+            Aria leggera
+            {% elif sensor > 12 and sensor < 19.99 %}
+            Leggera brezza
+            {% elif sensor > 20 and sensor < 29.99 %}
+            Brezza moderata
+            {% elif sensor > 30 and sensor < 39.99 %}
+            Vento fresco
+            {% elif sensor > 40 and sensor < 50.99 %}
+            Forte vento
+            {% elif sensor > 51 and sensor < 62.99 %}
+            Vicino a burrasca
+            {% elif sensor > 63 and sensor < 75.99 %}
+            Burrasca
+            {% elif sensor > 76 and sensor < 87.99 %}
+            Forte burrasca
+            {% elif sensor > 88 and sensor < 102.99 %}
+            Tempesta
+            {% elif sensor > 103 and sensor < 117.99 %}
+            Forte Tempesta
+            {% else %}
+            Uragano
+            {% endif %}

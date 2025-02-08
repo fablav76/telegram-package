@@ -1,0 +1,199 @@
+automation:
+  ############### Menù Stato Casa
+  - id: tgstatocasa
+    alias: tg stato casa
+    ##hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /casa
+        id: casa_command
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /casa
+        id: casa_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          command: /light_off
+        id: light_off
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          command: /switch_off
+        id: switch_off
+    actions:
+      - choose:
+
+          ############### ID CASA COMMAND ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - casa_command
+            sequence:
+              - action: script.tg_script_stato_casa
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+    
+          ############### ID CASA CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - casa_callback
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: '{{ trigger.event.data.message.message_id }}'
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_stato_casa
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID LIGHT OFF ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - light_off
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: '{{ trigger.event.data.message.message_id }}'
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: OK
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 3
+                  milliseconds: 0
+              - action: light.turn_off
+                metadata: {}
+                data: {}
+                target:
+                  entity_id: light.luci
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: Ho spento le luci
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 3
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_stato_casa
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID SWITCH OFF ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - switch_off
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: '{{ trigger.event.data.message.message_id }}'
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: OK
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 3
+                  milliseconds: 0
+              - action: switch.turn_off
+                target:
+                  entity_id: switch.switch
+                data: {}
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: Ho spento gli interruttori
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 3
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_stato_casa
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+
+          ############### ID ALL OFF ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - all_off
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: '{{ trigger.event.data.message.message_id }}'
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: OK
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 3
+                  milliseconds: 0
+              - action: light.turn_off
+                target:
+                  entity_id: light.luci
+              - action: switch.turn_off
+                target:
+                  entity_id: switch.switch
+                data: {}
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: Ho spento le luci e gli interruttori
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 3
+                  milliseconds: 0
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_stato_casa
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"

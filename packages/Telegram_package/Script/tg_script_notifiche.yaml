@@ -1,0 +1,101 @@
+# Questo script manda il messaggio di riepilogo sullo stato delle notifiche.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_notifiche.
+
+script:
+  tg_script_notifiche:
+    alias: tg script notifiche
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F3E0" }} *STATO NOTIFICHE:*
+
+            --------------------------------------------------------------------
+            Le notifiche Telegram sono {{ states('input_boolean.telegram')
+            | replace("off", "*disattivate*")
+            | replace("on","*attivate*")}}
+
+            Le notifiche in App Companion sono {{ states('input_boolean.notifiche_in_app')
+            | replace("off", "*disattivate*")
+            | replace("on","*attivate*")}}
+      - choose:
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: input_boolean.telegram
+                    state: "on"
+                  - condition: state
+                    entity_id: input_boolean.notifiche_in_app
+                    state: "on"
+            sequence:
+              - action: telegram_bot.edit_replymarkup
+                metadata: {}
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger }}"
+                  inline_keyboard:
+                    - '{{ "\U00002709" }} Disattiva notifiche Telegram:/telegram_off'
+                    - '{{ "\U00002709" }} Disattiva notifiche in App:/app_companion_off'
+                    - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: input_boolean.telegram
+                    state: "on"
+                  - condition: state
+                    entity_id: input_boolean.notifiche_in_app
+                    state: "off"
+            sequence:
+              - action: telegram_bot.edit_replymarkup
+                metadata: {}
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger }}"
+                  inline_keyboard:
+                    - '{{ "\U00002709" }} Disattiva notifiche Telegram:/telegram_off'
+                    - '{{ "\U00002709" }} Attiva notifiche in App:/app_companion_on'
+                    - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: input_boolean.telegram
+                    state: "off"
+                  - condition: state
+                    entity_id: input_boolean.notifiche_in_app
+                    state: "on"
+            sequence:
+              - action: telegram_bot.edit_replymarkup
+                metadata: {}
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger }}"
+                  inline_keyboard:
+                    - '{{ "\U00002709" }} Attiva notifiche Telegram:/telegram_on'
+                    - '{{ "\U00002709" }} Disattiva notifiche in App:/app_companion_off'
+                    - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: input_boolean.telegram
+                    state: "off"
+                  - condition: state
+                    entity_id: input_boolean.notifiche_in_app
+                    state: "off"
+            sequence:
+              - action: telegram_bot.edit_replymarkup
+                metadata: {}
+                data:
+                  message_id: "last"
+                  chat_id: "{{ trigger }}"
+                  inline_keyboard:
+                    - '{{ "\U00002709" }} Attiva notifiche Telegram:/telegram_on'
+                    - '{{ "\U00002709" }} Attiva notifiche in App:/app_companion_on'
+                    - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'

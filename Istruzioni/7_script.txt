@@ -1,0 +1,296 @@
+##########################################  SCRIPT  ##########################################
+SCRIPT:
+
+#############################################################
+tg_script_allarme.yaml    (FILE YAML)
+  └ tg_script_allarme     (script)
+
+  Questo script manda il messaggio di riepilogo sullo stato dell'allarme, delle notifiche Telegram, dell' App Companion e della sirena.
+
+  - Notifiche Telegram è un booleano che, quando attivato, attiva delle automazioni (non incluse)
+  - Notifiche App Companion è anch'esso un booleano (automazioni non incluse)
+  - Allarme totale è un booleano che attivato inserisce l'allarme, attiva tutte le notifiche e la sirena (automazioni non incluse nel package)
+
+  Azioni possibili tramite i callback
+  
+    inline_keyboard:
+      - '{{ "\U0001F513" }} Disattiva:/alarm-disarm'
+      - '{{ "\U0001F3E0" }} In casa:/alarm-arm-home,{{ "\U0001F9F3" }} Fuori casa:/alarm-arm-away'
+      - '{{ "\U0001F6E1" }} Allarme Totale:/alarm-total'
+      - '{{ "\U00002709" }} Notifiche:/notify,{{ "\U0001F6A8" }} Sirena:/sirena'
+      - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+#############################################################
+tg script locate.yaml                (FILE YAML)
+  ├ tg script locate                 (script)
+  ├ tg_script_locate_iphone          (script)
+  ├ tg_script_locate_iphone_map      (script)
+  ├ tg_script_locate_pixel_7         (script)
+  ├ tg_script_locate_pixel_7_map     (script)
+  ├ tg_script_locate_oppo            (script)
+  └ tg_script_locate_oppo_map        (script)
+		
+#############################################################
+tg script locate
+
+  Questo è lo script per localizzare i cellulari
+  Azioni possibili tramite i callback
+    
+    inline_keyboard:
+    - '{{ "\U0001F466" }} iPhone Sergio:/locate_iphone'
+    - '{{ "\U0001F468" }} Pixel Fabio:/locate_pixel_7,{{ "\U0001F469" }} Oppo Giusy:/locate_oppo'
+    - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+#############################################################
+tg_script_locate_iphone
+tg_script_locate_pixel_7
+tg_script_locate_oppo
+  
+  Richiede un aggiornamento della posizione gps del dsipositivo ed invia il messaggio su posizione (zona e indirizzo), batteria, e ultimo aggiornamento dei sensori.
+  
+#############################################################
+tg_script_locate_iphone_map
+tg_script_locate_pixel_7_map
+tg_script_locate_oppo_map
+
+  
+  Invia la mappa con le coordinate geografiche per raggiungere il dispositivo con google maps
+
+#############################################################
+tg_script_luci.yaml                     (FILE YAML)
+  ├ tg_script_luci                      (script)
+  ├ tg_script_luci_edit                 (script)
+  ├ tg_script_luci_soggiorno            (script)
+  ├ tg_script_luci_soggiorno_edit       (script)
+  ├ tg_script_luci_cucina               (script)
+  ├ tg_script_luci_cucina_edit          (script)
+  ├ tg_script_luci_ingresso             (script)
+  ├ tg_script_luci_ingresso_edit        (script)
+  ├ tg_script_luci_corridoio            (script)
+  ├ tg_script_luci_corridoio_edit       (script)
+  ├ tg_script_luci_camera               (script)
+  ├ tg_script_luci_camera_edit          (script)
+  ├ tg_script_luci_cameretta            (script)
+  ├ tg_script_luci_cameretta_edit       (script)
+  ├ tg_script_luci_studio               (script)
+  ├ tg_script_luci_studio_edit          (script)
+  ├ tg_script_luci_bagni                (script)
+  ├ tg_script_luci_bagni_edit           (script)
+  ├ tg_script_luci_bagno_grande         (script)
+  ├ tg_script_luci_bagno_grande_edit    (script)
+  ├ tg_script_luci_bagno_piccolo        (script)
+  └ tg_script_luci_bagno_piccolo_edit   (script)
+	
+#############################################################
+tg_script_luci
+  Invia un messaggio di riepilogo sullo stato delle luci, non delle singole luci ma dei gruppi stanza (luci soggiorno, luci cucina,etc...)
+  Anche se una sola luce è accesa in soggiorno riporta che le luci in soggiorno sono accese.
+  Azioni possibili tramite i callback
+  
+  inline_keyboard:
+    - '{{ "\U0001F6CB" }} Soggiorno:/soggiorno, {{ "\U0001F37D" }} Cucina:/cucina'
+    - '{{ "\U0001F6AA" }} Ingresso:/ingresso, {{ "\U00000FC1" }} Corridoio:/corridoio'
+    - '{{ "\U0001F6CC" }} Matrimoniale:/matrimoniale, {{ "\U0001F3A0" }} Cameretta:/cameretta'
+    - '{{ "\U0001F4D6" }} Studio:/studio, {{ "\U0001F6C0" }} Bagni:/bagni'
+    - '{{ "\U0001F4A1" }} Spegni tutte le luci:/luci_off'
+    - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+#############################################################
+tg_script_luci_edit
+  
+  Il menu è identico al precedente solo che cambiano i dati del bot. Viene lanciato per aggiornare il menu dopo aver spento tutte le luci
+
+#############################################################
+tg_script_luci_soggiorno
+tg_script_luci_cucina
+tg_script_luci_ingresso
+tg_script_luci_corridoio
+tg_script_luci_camera
+tg_script_luci_cameretta
+tg_script_luci_studio
+tg_script_luci_bagni
+tg_script_luci_bagno_grande
+tg_script_luci_bagno_piccolo
+
+  Invia un messaggio di riepilogo sullo stato delle singole luci delle varie stanze e consente di accendere/spegnere tutte le luci insieme (tramite i tasti accendi soggiorno
+  spegni soggiorno) o singolarmente (un click sul tasto effettua un toggle).
+  Azioni possibili tramite i callback (esempio soggiorno)
+  
+    inline_keyboard:
+      - "Accendere:/accendisoggiorno, Spegnere:/spegnisoggiorno"
+      - "Luce soggiorno:/luce_soggiorno"
+      - "Led soggiorno:/led_soggiorno"
+      - "Lampada soggiorno:/lampada_soggiorno"
+      - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+      - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+#############################################################
+tg_script_luci_soggiorno_edit
+tg_script_luci_cucina_edit
+tg_script_luci_ingresso_edit
+tg_script_luci_corridoio_edit
+tg_script_luci_camera_edit
+tg_script_luci_cameretta_edit
+tg_script_luci_studio_edit
+tg_script_luci_bagni_edit
+tg_script_luci_bagno_grande_edit
+tg_script_luci_bagno_piccolo_edit
+
+  Il menu è identico al precedente solo che cambia l'azione (telegram_bot.edit_message).
+  Viene lanciato per aggiornare il menu dopo aver premuto un tasto per accendere o spegnere qualcosa.
+  In pratica viene modificato il messaggio inviato in precedenza.
+  
+#############################################################
+tg_script_meteo
+
+  Manda le informazioni sul meteo.
+  Per far funzionare questo script bisogna inserire dei sensori meteo particolari inclusi in meteo_forecast.yaml ed avere le integrazioni forecast.casa e openweathermap
+
+#############################################################
+tg_script_notifiche
+
+  Invia un messaggio di riepilogo sullo stato delle notifiche Telegram e dell' App Companion. In base allo stato dei 2 booleani cambia la tastiera in linea.
+  Azioni possibili tramite i callback (nel caso che sono attivi entrambi i booleani):
+  
+    inline_keyboard:
+      - '{{ "\U00002709" }} Disattiva notifiche Telegram:/telegram_off'
+      - '{{ "\U00002709" }} Disattiva notifiche in App:/app_companion_off'
+      - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+#############################################################
+tg_script_sensori
+
+  E' lo script che invia il messaggio sullo stato di alcuni sensori
+  La tastiera in linea consente di aggiornare il menu tramite callback /aggiorna_sensori che fa partire l'automazione tg_sensori,
+  che esegue a sua volta lo script tg_script_sensori_edit
+  
+#############################################################
+tg_script_sensori_edit
+
+  Identico al precedente ma cambia l'azione (telegram_bot.edit_message).
+  In pratica viene modificato il messaggio inviato in precedenza.
+  
+#############################################################
+tg_script_servizi
+
+  E' lo script che invia il messaggio sui servizi
+  
+#############################################################
+tg_script_sistema
+
+  E' lo script che invia il messaggio sullo stato del sistema e consente il riavvio di Home Assistant
+  
+    inline_keyboard:
+      - '{{ "\U0001F4A3"}} Riavvia Home Assistant:/restart_ha'
+      - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'        
+
+#############################################################
+tg_script_snapshots
+
+  Questo script manda il messaggio di richiesta delle foto delle videocamere. Chiede di quale videocamera si vuole ottenere la foto.
+	
+    inline_keyboard:
+      - '{{ "\U0001F6AA" }} Porta di ingresso:/snap_porta, {{ "\U0001F6CB" }} Soggiorno:/snap_soggiorno'
+      - '{{ "\U0001F37D" }} Cucina:/snap_cucina, {{ "\U0001F37D" }} Cucina2:/snap_cucina2'
+      - '{{ "\U0001F6CC" }} Camera:/snap_camera, {{ "\U0001F3A0" }} Cameretta:/snap_cameretta'
+      - '{{ "\U0001F4F7" }} Tutte le cam:/snap_tutti'
+      - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+#############################################################
+tg_script_video
+
+  Questo script manda il messaggio di richiesta dei video. Chiede di quale videocamera si vuole il video.
+	
+    inline_keyboard:
+      - '{{ "\U0001F4F9" }} Soggiorno:/video_soggiorno, {{ "\U0001F4F9" }} Cucina:/video_cucina'
+      - '{{ "\U0001F4F9" }} Camera:/video_camera, {{ "\U0001F4F9" }} Cameretta:/video_cameretta'
+      - '{{ "\U0001F4F9" }} Tutte le cam:/video_tutti'
+      - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+#############################################################
+tg_script_video_camera
+
+  Questo script registra e manda il video della camera da letto.
+
+#############################################################
+tg_script_video_cameretta
+
+  Questo script registra e manda il video della cameretta dei bimbi.
+
+#############################################################
+tg_script_video_cucina
+
+  Questo script registra e manda il video dellla cucina.
+
+#############################################################
+tg_script_video_soggiorno
+
+  Questo script registra e manda il video del soggiorno.
+
+#############################################################
+tg_script_video_camera
+
+  Questo script registra e manda il video della camera da letto.
+
+#############################################################
+tg_script_stato_casa
+
+  Questo script manda il messaggio di riepilogo sullo stato della casa.
+  La tastiera in linea cambia a seconda se le luci o gli interruttori sono accesi.
+  Per funzionare vanno create delle entità aiutanti tramite UI (dal punto 5 in poi)
+  Le entità utilizzate sono:
+    1)alarm_control_panel.home
+    2)sensor.temperatura_media
+    3)sensor.umidita_media
+    4)light.soggiorno light.cucina, etc...
+      le entità gruppo luce delle stanze, fatti tutti con gli aiutanti da intefaccia UI:
+      light.soggiorno (include tutte le luci del soggiorno), light.cucina (tutte le luci della cucina), etc....
+    5)light.luci
+      è il gruppo luci che raggruppa a sua volta le entità gruppo luce delle stanze
+    6)sensor.numero_luci_accese
+      è un aiutante template di un sensore che conta
+      il numero di luci accese in casa in totale:
+      questo è il modello fatto in UI:
+       
+          {{ expand('light.luci')
+            | selectattr('state','eq','on')
+            | list
+            | count }}
+
+    7)sensor.elenco_luci_accese
+      un altro aiutante template di sensore che elenca il nome delle luci accese:
+      questo è il modello fatto anch'esso in UI:
+       
+          {{ expand(states.light.luci)
+            | selectattr( 'state', 'eq', 'on') 
+            | map(attribute='name')
+            | list
+            | join (', ') }}
+            
+      viene interpellata l'entità light.luci,
+      selezionate le luci che sono accese con selectattr( 'state', 'eq', 'on'),
+      mappato l'attributo nome con map(attribute='name')
+      e listati (con list) i nomi e separati da una virgola con join (', ')
+      il risultato è tipo: Luce soggiorno, Comodino camera, Lampada scrivania
+
+    8)switch.switch
+      è il gruppo di interruttori che raggruppa tutti gli interruttori che vogliamo monitorare
+
+    9)sensor.numero_switch_accesi
+    come per le luci è un aiutante template di un sensore che conta
+    il numero di switch accesi nel gruppo switch.switch:
+    questo è il modello fatto in UI:
+              
+          {{ expand('switch.switch')
+            | selectattr('state','eq','on')
+            | list
+            | count }}
+
+    10)sensor.elenco_switch_accesi
+    aiutante template di sensore che elenca il nome degli switch accesi:
+    
+          {{ expand(states.switch.switch)
+            | selectattr( 'state', 'eq', 'on') 
+            | map(attribute='name')
+            | list
+            | join (', ') }}

@@ -1,0 +1,27 @@
+# Questo script registra e manda il video della cameretta.
+# Il video viene salvato nella cartella media/cam, va creata sotto config
+# ed abilitato l'accesso in configuration.yaml:
+#
+# homeassistant:
+#   allowlist_external_dirs:
+#     - "/config/media/cam"
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_notifiche.
+
+script:
+  tg_script_video_cameretta:
+    alias: tg script video cameretta
+    sequence:
+      - action: camera.record
+        target:
+          entity_id: camera.cameretta_onvif_profile000
+        data:
+          duration: 10
+          lookback: 0
+          filename: /config/media/cam/cameretta.mp4
+      - action: telegram_bot.send_video
+        metadata: {}
+        data:
+          authentication: digest
+          file: /config/media/cam/cameretta.mp4
+          target: "{{ trigger }}"

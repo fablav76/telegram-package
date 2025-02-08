@@ -1,0 +1,86 @@
+automation:
+  - id: tginfosistema
+    alias: tg sistema
+    #hide_entity: true
+    triggers:
+      - trigger: event
+        event_type: telegram_command
+        event_data:
+          command: /sistema
+        id: sistema
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /sistema
+        id: sistema_callback
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /restart_ha
+        id: restart_ha
+      - trigger: event
+        event_type: telegram_callback
+        event_data:
+          data: /restart_ha_yes
+        id: restart_ha_yes
+    actions:
+      - choose:
+          ############### ID SISTEMA ###############
+          - conditions:
+              - condition: trigger
+                id: sistema
+            sequence:
+              - action: script.tg_script_sistema
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID SISTEMA CALLBACK ###############
+          - conditions:
+              - condition: trigger
+                id:
+                  - sistema_callback                  
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: script.tg_script_sistema
+                metadata: {}
+                data:
+                  trigger: "{{ trigger.event.data.user_id }}"
+          ############### ID RESTART HA ###############
+          - conditions:
+              - condition: trigger
+                id: restart_ha
+            sequence:
+              - action: telegram_bot.delete_message
+                data:
+                  message_id: "{{ trigger.event.data.message.message_id }}"
+                  chat_id: "{{ trigger.event.data.user_id }}"
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: Sei sicuro?
+                  inline_keyboard:
+                    - '{{ "\U0001F50C" }} Si:/restart_ha_yes,{{ "\U0001F4BB" }} No. torna:/sistema'
+                    - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+          ############### ID RESTART HA YES ###############
+          - conditions:
+              - condition: trigger
+                id: restart_ha_yes
+            sequence:
+              - action: telegram_bot.send_message
+                metadata: {}
+                data:
+                  target: "{{ trigger.event.data.user_id }}"
+                  message: >-
+                    *RIAVVIO HOME ASSISTANT*
+                    {{'\n'}}{{'\n'}}
+                    Attendere Prego.
+                    {{'\n'}}
+                    Ci vorranno pochi minuti.....
+              - action: homeassistant.restart
+                data: {}
+

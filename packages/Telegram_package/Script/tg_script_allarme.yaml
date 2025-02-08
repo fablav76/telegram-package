@@ -1,0 +1,45 @@
+# Questo script manda il messaggio di riepilogo sullo stato dell'allarme.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata 
+# dall'automazione tg_allarme.
+
+script:
+  tg_script_allarme:
+    alias: tg script allarme
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F6A8" }} *MENÙ ALLARME*:
+
+            --------------------------------------------------------------------
+
+            L'allarme domestico {{ states('alarm_control_panel.home')
+            | replace("armed_home","é inserito *(su CASA)*.")
+            | replace("disarmed","é *SPENTO*.")
+            | replace("arming", "*si sta per inserire*.")
+            | replace("armed_away", "é inserito *(FUORI CASA)*.") }}
+
+            Le notifiche Telegram sono {{ states('input_boolean.telegram')
+            | replace("off", "*DISATTIVATE*")
+            | replace("on","*ATTIVATE*")}}
+
+            Le notifiche in App Companion sono {{ states('input_boolean.notifiche_in_app')
+            | replace("off", "*DISATTIVATE*")
+            | replace("on","*ATTIVATE*")}}
+
+            L'Allarme Totale è {{ states('input_boolean.allarme')
+            | replace("off", "*DISINSERITO*")
+            | replace("on","*INSERITO*")}}
+
+            La sirena è {{ states('input_boolean.sirena')
+            | replace("off", "*SPENTA*")
+            | replace("on","*ACCESA*")}}
+          inline_keyboard:
+            - '{{ "\U0001F513" }} Disattiva:/alarm-disarm'
+            - '{{ "\U0001F3E0" }} In casa:/alarm-arm-home,{{ "\U0001F9F3" }} Fuori casa:/alarm-arm-away'
+            - '{{ "\U0001F6E1" }} Allarme Totale:/alarm-total'
+            - '{{ "\U00002709" }} Notifiche:/notify,{{ "\U0001F6A8" }} Sirena:/sirena'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'

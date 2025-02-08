@@ -1,0 +1,760 @@
+# Questo script manda il messaggio di riepilogo sullo stato delle luci accese.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_luci.
+
+script:
+
+  ################ MENU LUCI ################
+  tg_script_luci:
+    alias: tg script luci
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F4A1" }} *MENÙ LUCI*:
+
+            ----------------------------------
+
+            {% if is_state("light.soggiorno", "on") %}
+            *Luci Soggiorno*:   {{ states('light.soggiorno')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Soggiorno*: {{ states('light.soggiorno')| upper }}{% endif %}
+
+            {% if is_state("light.cucina", "on") %}
+            *Luci Cucina*:   {{ states('light.cucina')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Cucina*: {{ states('light.cucina')| upper }}{% endif %}
+
+            {% if is_state("light.ingresso", "on") %}
+            *Luci Ingresso*:   {{ states('light.ingresso')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Ingresso*: {{ states('light.ingresso')| upper }}{% endif %}
+
+            {% if is_state("light.corridoio", "on") %}
+            *Luci Corridoio*:   {{ states('light.corridoio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Corridoio*: {{ states('light.corridoio')| upper }}{% endif %}
+
+            {% if is_state("light.camera", "on") %}
+            *Luci Camera Matrimoniale*:   {{ states('light.camera')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Camera Matrimoniale*: {{ states('light.camera')| upper }}{% endif %}
+
+            {% if is_state("light.cameretta", "on") %}
+            *Luci Cameretta*:   {{ states('light.cameretta')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Cameretta*: {{ states('light.cameretta')| upper }}{% endif %}
+
+            {% if is_state("light.studio", "on") %}
+            *Luci Studio*:   {{ states('light.studio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Studio*: {{ states('light.studio')| upper }}{% endif %}
+
+            {% if is_state("light.bagno_grande", "on") %}
+            *Luci Bagno grande*:   {{ states('light.bagno_grande')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Bagno grande*: {{ states('light.bagno_grande')| upper }}{% endif %}
+
+            {% if is_state("light.bagno_piccolo", "on") %}
+            *Luci Bagno piccolo*:   {{ states('light.bagno_piccolo')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Bagno piccolo*: {{ states('light.bagno_piccolo')| upper }}{% endif %}
+
+          inline_keyboard:
+            - '{{ "\U0001F6CB" }} Soggiorno:/soggiorno, {{ "\U0001F37D" }} Cucina:/cucina'
+            - '{{ "\U0001F6AA" }} Ingresso:/ingresso, {{ "\U00000FC1" }} Corridoio:/corridoio'
+            - '{{ "\U0001F6CC" }} Matrimoniale:/matrimoniale, {{ "\U0001F3A0" }} Cameretta:/cameretta'
+            - '{{ "\U0001F4D6" }} Studio:/studio, {{ "\U0001F6C0" }} Bagni:/bagni'
+            - '{{ "\U0001F4A1" }} Spegni tutte le luci:/luci_off'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI EDIT MESSAGE ################
+  tg_script_luci_edit:
+    alias: tg script luci edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U0001F4A1" }} *MENÙ LUCI*:
+
+            ----------------------------------
+
+            {% if is_state("light.soggiorno", "on") %}
+            *Luci Soggiorno*:   {{ states('light.soggiorno')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Soggiorno*: {{ states('light.soggiorno')| upper }}{% endif %}
+
+            {% if is_state("light.cucina", "on") %}
+            *Luci Cucina*:   {{ states('light.cucina')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Cucina*: {{ states('light.cucina')| upper }}{% endif %}
+
+            {% if is_state("light.ingresso", "on") %}
+            *Luci Ingresso*:   {{ states('light.ingresso')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Ingresso*: {{ states('light.ingresso')| upper }}{% endif %}
+
+            {% if is_state("light.corridoio", "on") %}
+            *Luci Corridoio*:   {{ states('light.corridoio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Corridoio*: {{ states('light.corridoio')| upper }}{% endif %}
+
+            {% if is_state("light.camera", "on") %}
+            *Luci Camera Matrimoniale*:   {{ states('light.camera')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Camera Matrimoniale*: {{ states('light.camera')| upper }}{% endif %}
+
+            {% if is_state("light.cameretta", "on") %}
+            *Luci Cameretta*:   {{ states('light.cameretta')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Cameretta*: {{ states('light.cameretta')| upper }}{% endif %}
+
+            {% if is_state("light.studio", "on") %}
+            *Luci Studio*:   {{ states('light.studio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Studio*: {{ states('light.studio')| upper }}{% endif %}
+
+            {% if is_state("light.bagno_grande", "on") %}
+            *Luci Bagno grande*:   {{ states('light.bagno_grande')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Bagno grande*: {{ states('light.bagno_grande')| upper }}{% endif %}
+
+            {% if is_state("light.bagno_piccolo", "on") %}
+            *Luci Bagno piccolo*:   {{ states('light.bagno_piccolo')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Bagno piccolo*: {{ states('light.bagno_piccolo')| upper }}{% endif %}
+
+          inline_keyboard:
+            - '{{ "\U0001F6CB" }} Soggiorno:/soggiorno, {{ "\U0001F37D" }} Cucina:/cucina'
+            - '{{ "\U0001F6AA" }} Ingresso:/ingresso, {{ "\U00000FC1" }} Corridoio:/corridoio'
+            - '{{ "\U0001F6CC" }} Matrimoniale:/matrimoniale, {{ "\U0001F3A0" }} Cameretta:/cameretta'
+            - '{{ "\U0001F4D6" }} Studio:/studio, {{ "\U0001F6C0" }} Bagni:/bagni'
+            - '{{ "\U0001F4A1" }} Spegni tutte le luci:/luci_off'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI SOGGIORNO ################
+  tg_script_luci_soggiorno:
+    alias: tg script luci soggiorno
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F6CB" }}  *LUCI SOGGIORNO*:
+
+            {% if is_state("light.soggiorno", "off") %} Luci Spente
+            {%elif is_state("light.soggiorno", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_soggiorno", "on") %}
+            *Luce*:   {{ states('light.luce_soggiorno')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_soggiorno')| upper }}{% endif %}
+
+            {% if is_state("light.led_soggiorno", "on") %}
+            *Led*:   {{ states('light.led_soggiorno')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Led*: {{ states('light.led_soggiorno')| upper }}{% endif %}
+
+            {% if is_state("light.lampada_soggiorno", "on") %}
+            *Lampada*:   {{ states('light.lampada_soggiorno')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Lampada*: {{ states('light.lampada_soggiorno')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendisoggiorno, Spegnere:/spegnisoggiorno"
+            - "Luce soggiorno:/luce_soggiorno"
+            - "Led soggiorno:/led_soggiorno"
+            - "Lampada soggiorno:/lampada_soggiorno"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI SOGGIORNO  EDIT MESSAGE################
+  tg_script_luci_soggiorno_edit:
+    alias: tg script luci soggiorno edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U0001F6CB" }}  *LUCI SOGGIORNO*:
+
+            {% if is_state("light.soggiorno", "off") %} Luci Spente
+            {%elif is_state("light.soggiorno", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_soggiorno", "on") %}
+            *Luce*:   {{ states('light.luce_soggiorno')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_soggiorno')| upper }}{% endif %}
+
+            {% if is_state("light.led_soggiorno", "on") %}
+            *Led*:   {{ states('light.led_soggiorno')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Led*: {{ states('light.led_soggiorno')| upper }}{% endif %}
+
+            {% if is_state("light.lampada_soggiorno", "on") %}
+            *Lampada*:   {{ states('light.lampada_soggiorno')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Lampada*: {{ states('light.lampada_soggiorno')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendisoggiorno, Spegnere:/spegnisoggiorno"
+            - "Luce soggiorno:/luce_soggiorno"
+            - "Led soggiorno:/led_soggiorno"
+            - "Lampada soggiorno:/lampada_soggiorno"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI CUCINA ################
+  tg_script_luci_cucina:
+    alias: tg script luci cucina
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+
+          message: >-
+
+            {{ "\U0001F37D" }}  *LUCI CUCINA*:
+
+            {% if is_state("light.cucina", "off") %} Luci Spente
+            {%elif is_state("light.cucina", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_cucina", "on") %}
+            *Luce Cucina*:   {{ states('light.luce_cucina')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce Cucina*: {{ states('light.luce_cucina')| upper }}{% endif %}
+
+            {% if is_state("light.ripostiglio", "on") %}
+            *Luce Ripostiglio*:   {{ states('light.ripostiglio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce Ripostiglio*: {{ states('light.ripostiglio')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendicucina, Spegnere:/spegnicucina"
+            - "Luce cucina:/luce_cucina, Luce ripostiglio:/luce_ripostiglio"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI CUCINA EDIT MESSAGE ################
+  tg_script_luci_cucina_edit:
+    alias: tg script luci cucina edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+
+          message: >-
+
+            {{ "\U0001F37D" }}  *LUCI CUCINA*:
+
+            {% if is_state("light.cucina", "off") %} Luci Spente
+            {%elif is_state("light.cucina", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_cucina", "on") %}
+            *Luce Cucina*:   {{ states('light.luce_cucina')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce Cucina*: {{ states('light.luce_cucina')| upper }}{% endif %}
+
+            {% if is_state("light.ripostiglio", "on") %}
+            *Luce Ripostiglio*:   {{ states('light.ripostiglio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce Ripostiglio*: {{ states('light.ripostiglio')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendicucina, Spegnere:/spegnicucina"
+            - "Luce cucina:/luce_cucina, Luce ripostiglio:/luce_ripostiglio"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI INGRESSO ################
+  tg_script_luci_ingresso:
+    alias: tg script luci ingresso
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+
+          message: >-
+
+            {{ "\U0001F6AA" }}  *LUCI INGRESSO*:
+
+            {% if is_state("light.ingresso", "off") %} Luci Spente
+            {%elif is_state("light.ingresso", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_ingresso_1", "on") %}
+            *Luce ingresso 1*:   {{ states('light.luce_ingresso_1')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce ingresso 1*: {{ states('light.luce_ingresso_1')| upper }}{% endif %}
+
+            {% if is_state("light.luce_ingresso_2", "on") %}
+            *Luce ingresso 2*:   {{ states('light.luce_ingresso_2')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce ingresso 2*: {{ states('light.luce_ingresso_2')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendiingresso, Spegnere:/spegniingresso"
+            - "Luce ingresso 1:/luce_ingresso_1, Luce ingresso 2:/luce_ingresso_2"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI INGRESSO EDIT MESSAGE ################
+  tg_script_luci_ingresso_edit:
+    alias: tg script luci ingresso edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+
+          message: >-
+
+            {{ "\U0001F6AA" }}  *LUCI INGRESSO*:
+
+            {% if is_state("light.ingresso", "off") %} Luci Spente
+            {%elif is_state("light.ingresso", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_ingresso_1", "on") %}
+            *Luce ingresso 1*:   {{ states('light.luce_ingresso_1')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce ingresso 1*: {{ states('light.luce_ingresso_1')| upper }}{% endif %}
+
+            {% if is_state("light.luce_ingresso_2", "on") %}
+            *Luce ingresso 2*:   {{ states('light.luce_ingresso_2')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce ingresso 2*: {{ states('light.luce_ingresso_2')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendiingresso, Spegnere:/spegniingresso"
+            - "Luce ingresso 1:/luce_ingresso_1, Luce ingresso 2:/luce_ingresso_2"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI CORRIDOIO ################
+  tg_script_luci_corridoio:
+    alias: tg script luci corridoio
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U00000FC1" }} *LUCI CORRIDOIO*:
+
+            {% if is_state("light.corridoio", "off") %} Luci Spente
+            {%elif is_state("light.corridoio", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.armadio", "on") %}
+            *Luce armadio*:   {{ states('light.armadio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce armadio*: {{ states('light.armadio')| upper }}{% endif %}
+
+            {% if is_state("light.scarpiera", "on") %}
+            *Luce scarpiera*:   {{ states('light.scarpiera')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce scarpiera*: {{ states('light.scarpiera')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendicorridoio, Spegnere:/spegnicorridoio"
+            - "Armadio:/luce_armadio, Scarpiera:/luce_scarpiera"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI CORRIDOIO EDIT MESSAGE ################
+  tg_script_luci_corridoio_edit:
+    alias: tg script luci corridoio edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U00000FC1" }} *LUCI CORRIDOIO*:
+
+            {% if is_state("light.corridoio", "off") %} Luci Spente
+            {%elif is_state("light.corridoio", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.armadio", "on") %}
+            *Luce armadio*:   {{ states('light.armadio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce armadio*: {{ states('light.armadio')| upper }}{% endif %}
+
+            {% if is_state("light.scarpiera", "on") %}
+            *Luce scarpiera*:   {{ states('light.scarpiera')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce scarpiera*: {{ states('light.scarpiera')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendicorridoio, Spegnere:/spegnicorridoio"
+            - "Armadio:/luce_armadio, Scarpiera:/luce_scarpiera"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI CAMERA MATRIMONIALE ################
+  tg_script_luci_camera:
+    alias: tg script luci camera
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F6CC" }} *LUCI CAMERA MATRIMONIALE*:
+
+            {% if is_state("light.camera", "off") %} Luci Spente
+            {%elif is_state("light.camera", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_camera", "on") %}
+            *Luce*:   {{ states('light.luce_camera')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_camera')| upper }}{% endif %}
+
+            {% if is_state("light.comodino", "on") %}
+            *Comodino*:   {{ states('light.comodino')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Comodino*: {{ states('light.comodino')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendimatrimoniale, Spegnere:/spegnimatrimoniale"
+            - "Luce camera:/luce_camera, Comodino:/luce_comodino"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI CAMERA MATRIMONIALE EDIT MESSAGE ################
+  tg_script_luci_camera_edit:
+    alias: tg script luci camera edit
+    sequence:
+      - action: telegram_bot.edit_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U0001F6CC" }} *LUCI CAMERA MATRIMONIALE*:
+
+            {% if is_state("light.camera", "off") %} Luci Spente
+            {%elif is_state("light.camera", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_camera", "on") %}
+            *Luce*:   {{ states('light.luce_camera')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_camera')| upper }}{% endif %}
+
+            {% if is_state("light.comodino", "on") %}
+            *Comodino*:   {{ states('light.comodino')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Comodino*: {{ states('light.comodino')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendimatrimoniale, Spegnere:/spegnimatrimoniale"
+            - "Luce camera:/luce_camera, Comodino:/luce_comodino"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI CAMERETTA ################
+  tg_script_luci_cameretta:
+    alias: tg script luci cameretta
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F3A0" }} *LUCI CAMERETTA*:
+
+            {% if is_state("light.cameretta", "off") %} Luci Spente
+            {%elif is_state("light.cameretta", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_cameretta", "on") %}
+            *Luce*:   {{ states('light.luce_cameretta')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_cameretta')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendicameretta, Spegnere:/spegnicameretta"
+            - "Luce cameretta:/luce_cameretta"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI CAMERETTA EDIT MESSAGE ################
+  tg_script_luci_cameretta_edit:
+    alias: tg script luci cameretta edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U0001F3A0" }} *LUCI CAMERETTA*:
+
+            {% if is_state("light.cameretta", "off") %} Luci Spente
+            {%elif is_state("light.cameretta", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_cameretta", "on") %}
+            *Luce*:   {{ states('light.luce_cameretta')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_cameretta')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendicameretta, Spegnere:/spegnicameretta"
+            - "Luce cameretta:/luce_cameretta"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI STUDIO ################
+  tg_script_luci_studio:
+    alias: tg script luci studio
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+
+          message: >-
+
+            {{ "\U0001F4D6" }} *LUCI STUDIO*:
+
+            {% if is_state("light.studio", "off") %} Luci Spente
+            {%elif is_state("light.studio", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_studio", "on") %}
+            *Luce*:   {{ states('light.luce_studio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_studio')| upper }}{% endif %}
+
+            {% if is_state("light.luce_scrivania", "on") %}
+            *Scrivania*:   {{ states('light.luce_scrivania')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Scrivaia*: {{ states('light.luce_scrivania')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendistudio, Spegnere:/spegnistudio"
+            - "Luce studio:/luce_studio, Luce scrivania:/luce_scrivania"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI STUDIO EDIT MESSAGE ################
+  tg_script_luci_studio_edit:
+    alias: tg script luci studio edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+
+          message: >-
+
+            {{ "\U0001F4D6" }} *LUCI STUDIO*:
+
+            {% if is_state("light.studio", "off") %} Luci Spente
+            {%elif is_state("light.studio", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_studio", "on") %}
+            *Luce*:   {{ states('light.luce_studio')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_studio')| upper }}{% endif %}
+
+            {% if is_state("light.luce_scrivania", "on") %}
+            *Scrivania*:   {{ states('light.luce_scrivania')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Scrivaia*: {{ states('light.luce_scrivania')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendistudio, Spegnere:/spegnistudio"
+            - "Luce studio:/luce_studio, Luce scrivania:/luce_scrivania"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI BAGNI ################
+  tg_script_luci_bagni:
+    alias: tg script luci bagni
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F6C0" }} *LUCI BAGNI*:
+
+            {% if is_state("light.bagni", "off") %} Luci Spente
+            {%elif is_state("light.bagni", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.bagno_grande", "on") %}
+            *Luci Bagno Grande*:   {{ states('light.bagno_grande')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Bagno Grande*: {{ states('light.bagno_grande')| upper }}{% endif %}
+
+            {% if is_state("light.bagno_piccolo", "on") %}
+            *Luci Bagno Piccolo*:   {{ states('light.bagno_piccolo')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Bagno Piccolo*: {{ states('light.bagno_piccolo')| upper }}{% endif %}
+          inline_keyboard:
+            - '{{ "\U0001F6C0" }} Bagno grande:/bagnogrande, {{ "\U0001F6BF" }} Bagno piccolo:/bagnopiccolo'
+            - "Accendere:/accendibagni, Spegnere:/spegnibagni"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI BAGNI EDIT MESSAGE ################
+  tg_script_luci_bagni_edit:
+    alias: tg script luci bagni edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U0001F6C0" }} *LUCI BAGNI*:
+
+            {% if is_state("light.bagni", "off") %} Luci Spente
+            {%elif is_state("light.bagni", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.bagno_grande", "on") %}
+            *Luci Bagno Grande*:   {{ states('light.bagno_grande')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Bagno Grande*: {{ states('light.bagno_grande')| upper }}{% endif %}
+
+            {% if is_state("light.bagno_piccolo", "on") %}
+            *Luci Bagno Piccolo*:   {{ states('light.bagno_piccolo')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luci Bagno Piccolo*: {{ states('light.bagno_piccolo')| upper }}{% endif %}
+          inline_keyboard:
+            - '{{ "\U0001F6C0" }} Bagno grande:/bagnogrande, {{ "\U0001F6BF" }} Bagno piccolo:/bagnopiccolo'
+            - "Accendere:/accendibagni, Spegnere:/spegnibagni"
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI BAGNO GRANDE ################
+  tg_script_luci_bagno_grande:
+    alias: tg script luci bagno grande
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F6C0" }} *LUCI BAGNO GRANDE*:
+
+            {% if is_state("light.bagno_grande", "off") %} Luci Spente
+            {%elif is_state("light.bagno_grande", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_bagno_grande", "on") %}
+            *Luce*:   {{ states('light.luce_bagno_grande')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_bagno_grande')| upper }}{% endif %}
+
+          inline_keyboard:
+            - "Accendere:/accendibagnogrande, Spegnere:/spegnibagnogrande"
+            - "Luce Bagno:/luce_bagno_grande"
+            - '{{ "\U0001F6C0" }} Torna a Bagni:/bagni'
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI BAGNO GRANDE EDIT MESSAGE ################
+  tg_script_luci_bagno_grande_edit:
+    alias: tg script luci bagno grande edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U0001F6C0" }} *LUCI BAGNO GRANDE*:
+
+            {% if is_state("light.bagno_grande", "off") %} Luci Spente
+            {%elif is_state("light.bagno_grande", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_bagno_grande", "on") %}
+            *Luce*:   {{ states('light.luce_bagno_grande')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_bagno_grande')| upper }}{% endif %}
+
+          inline_keyboard:
+            - "Accendere:/accendibagnogrande, Spegnere:/spegnibagnogrande"
+            - "Luce Bagno:/luce_bagno_grande"
+            - '{{ "\U0001F6C0" }} Torna a Bagni:/bagni'
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI BAGNO PICCOLO ################
+  tg_script_luci_bagno_piccolo:
+    alias: tg script luci bagno piccolo
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001F6BF" }} *LUCI BAGNO PICCOLO*:
+
+            {% if is_state("light.bagno_piccolo", "off") %} Luci Spente
+            {%elif is_state("light.bagno_piccolo", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_bagno_piccolo", "on") %}
+            *Luce*:   {{ states('light.luce_bagno_piccolo')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_bagno_piccolo')| upper }}{% endif %}
+
+            {% if is_state("light.specchio_bagno_piccolo", "on") %}
+            *Specchio*:   {{ states('light.specchio_bagno_piccolo')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Specchio*: {{ states('light.specchio_bagno_piccolo')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendibagnopiccolo, Spegnere:/spegnibagnopiccolo"
+            - "Luce bagno:/luce_bagno_piccolo, Specchiera:/luce_specchio"
+            - '{{ "\U0001F6C0" }} Torna a Bagni:/bagni'
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+  ################ MENU LUCI BAGNO PICCOLO EDIT MESSAGE ################
+  tg_script_luci_bagno_piccolo_edit:
+    alias: tg script luci bagno piccolo edit
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          message_id: "{{ message_id }}"
+          chat_id: "{{ chat_id }}"
+          message: >-
+
+            {{ "\U0001F6BF" }} *LUCI BAGNO PICCOLO*:
+
+            {% if is_state("light.bagno_piccolo", "off") %} Luci Spente
+            {%elif is_state("light.bagno_piccolo", "on") %} Luci Accese {{ "\U0001F4A1" }}
+            {% else %} Luci non disponibili {% endif %}
+
+            ----------------------------------
+
+            {% if is_state("light.luce_bagno_piccolo", "on") %}
+            *Luce*:   {{ states('light.luce_bagno_piccolo')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Luce*: {{ states('light.luce_bagno_piccolo')| upper }}{% endif %}
+
+            {% if is_state("light.specchio_bagno_piccolo", "on") %}
+            *Specchio*:   {{ states('light.specchio_bagno_piccolo')| upper }}{{ "\U0001F4A1" }}
+            {% else %} *Specchio*: {{ states('light.specchio_bagno_piccolo')| upper }}{% endif %}
+          inline_keyboard:
+            - "Accendere:/accendibagnopiccolo, Spegnere:/spegnibagnopiccolo"
+            - "Luce bagno:/luce_bagno_piccolo, Specchiera:/luce_specchio"
+            - '{{ "\U0001F6C0" }} Torna a Bagni:/bagni'
+            - '{{ "\U0001F4A1" }} Torna a Luci:/luci'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'

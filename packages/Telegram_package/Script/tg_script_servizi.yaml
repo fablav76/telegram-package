@@ -1,0 +1,25 @@
+# Questo script esegue il menu dei servizi.
+# Come destinatario utilizza una variabile chiamata trigger che gli viene passata
+# dall'automazione tg_servizi.
+
+script:
+  tg_script_servizi:
+    alias: tg script servizi
+    sequence:
+      - action: telegram_bot.send_message
+        metadata: {}
+        data:
+          target: "{{ trigger }}"
+          message: >-
+
+            {{ "\U0001FA84" }} *SERVIZI*:
+
+            ----------------------------------
+
+            Da questo menu è possibile{{'\n'}}
+            riavviare alcune integrazioni{{'\n'}}
+            che non rispondono più.{{'\n'}}
+
+          inline_keyboard:
+            - '{{ "\U0001FA84"}} Ricarica localtuya:/reload_localtuya'
+            - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
