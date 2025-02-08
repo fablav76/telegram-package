@@ -33,4 +33,6 @@ notify:
     chat_id: 1673486287
 
 Ho utilizzato questo servizio per l'automazione tg_notifica_allarme
-P.S. l'api key ed i chad id non sono reali, non corrispondono al vero. Sono messi a caso solo per scopo dimostrativo.
+
+P.S. l'api key ed i chad id non sono reali, non corrispondono al vero.
+Sono messi a caso solo per scopo dimostrativo.
