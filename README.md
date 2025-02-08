@@ -12,6 +12,7 @@ Video Youtube ▶️
 
 | DOCUMENTAZIONE | NOTE |
 | :---: | --- |
+| [Avvertenze](Istruzioni/Avvertenze.txt) | **Leggere le avvertenze prima di installare questo package** |
 | [Pre-requisiti](Istruzioni/1_pre_requisiti.txt) | **Prima di iniziare leggere quali sono i pre requisiti** |
 | [Come creare un Bot](Istruzioni/2_come_creare_un_bot.txt) | Istruzioni sulla creazione di un bot Telegram |
 | [Come si fa da Home Assistant?](Istruzioni/3_come_funziona_telegram.txt) | Le principali azioni di Home Assistant per inviare, modificare, cancellare un messaggio |
