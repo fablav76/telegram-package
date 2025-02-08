@@ -197,42 +197,6 @@ tg_script_snapshots
       - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
 
 #############################################################
-tg_script_video
-
-  Questo script manda il messaggio di richiesta dei video. Chiede di quale videocamera si vuole il video.
-	
-    inline_keyboard:
-      - '{{ "\U0001F4F9" }} Soggiorno:/video_soggiorno, {{ "\U0001F4F9" }} Cucina:/video_cucina'
-      - '{{ "\U0001F4F9" }} Camera:/video_camera, {{ "\U0001F4F9" }} Cameretta:/video_cameretta'
-      - '{{ "\U0001F4F9" }} Tutte le cam:/video_tutti'
-      - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
-
-#############################################################
-tg_script_video_camera
-
-  Questo script registra e manda il video della camera da letto.
-
-#############################################################
-tg_script_video_cameretta
-
-  Questo script registra e manda il video della cameretta dei bimbi.
-
-#############################################################
-tg_script_video_cucina
-
-  Questo script registra e manda il video dellla cucina.
-
-#############################################################
-tg_script_video_soggiorno
-
-  Questo script registra e manda il video del soggiorno.
-
-#############################################################
-tg_script_video_camera
-
-  Questo script registra e manda il video della camera da letto.
-
-#############################################################
 tg_script_stato_casa
 
   Questo script manda il messaggio di riepilogo sullo stato della casa.
@@ -294,3 +258,35 @@ tg_script_stato_casa
             | map(attribute='name')
             | list
             | join (', ') }}
+
+#############################################################
+tg_script_video
+
+  Questo script manda il messaggio di richiesta dei video. Chiede di quale videocamera si vuole il video.
+	
+    inline_keyboard:
+      - '{{ "\U0001F4F9" }} Soggiorno:/video_soggiorno, {{ "\U0001F4F9" }} Cucina:/video_cucina'
+      - '{{ "\U0001F4F9" }} Camera:/video_camera, {{ "\U0001F4F9" }} Cameretta:/video_cameretta'
+      - '{{ "\U0001F4F9" }} Tutte le cam:/video_tutti'
+      - '{{ "\u21a9\ufe0f" }} Menú Principale:/stop'
+
+#############################################################
+tg_script_video_camera
+
+  Questo script registra e manda il video della camera da letto.
+
+#############################################################
+tg_script_video_cameretta
+
+  Questo script registra e manda il video della cameretta dei bimbi.
+
+#############################################################
+tg_script_video_cucina
+
+  Questo script registra e manda il video dellla cucina.
+
+#############################################################
+tg_script_video_soggiorno
+
+  Questo script registra e manda il video del soggiorno.
+
