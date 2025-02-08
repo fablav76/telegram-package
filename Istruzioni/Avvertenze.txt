@@ -4,4 +4,4 @@ Siccome questo Package Telegram è stato creato in riferimento alla mia istanza 
 declino ogni responsabilità relativa ad eventuali problemi, danni o rischi che l’utente può incontrare durante l’utilizzo di questo package.
 
 Mi raccomando, prima di spostare automazioni e script, di controllare e modificare le entità in esso contenute, onde evitare errori di configurazione.
-Andare sempre negli strumenti di amministratore e fare una verifica configurazione  prima di riavviare Home Assistant o le automazioni e gli script.
+Andare sempre negli strumenti sviluppatore e fare una verifica configurazione  prima di riavviare Home Assistant o le automazioni e gli script.
