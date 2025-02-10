@@ -16,14 +16,14 @@ Video Youtube ▶️
 
 | DOCUMENTATION | NOTES |
 | :---: | --- |
-| [Warnings - Avvertenze](Istruzioni/Avvertenze.txt) | **_See warnings before install this package_** <br> _Leggere le avvertenze prima di installare questo package_ |
-| [Prerequisites - Prerequisiti](Istruzioni/1_pre_requisiti.txt) | **_Read prerequisites before proceed_** <br> _Prima di iniziare leggere quali sono i pre requisiti_ |
-| [How to create a bot - Come creare un Bot](Istruzioni/2_come_creare_un_bot.txt) | **_Instructions on how to create a Telegram bot_** <br> _Istruzioni sulla creazione di un bot Telegram_ |
-| [Actions on Home Assistant - Come si fa da Home Assistant?](Istruzioni/3_come_funziona_telegram.txt) | **_The main Home Assistant actions to send, edit, delete a message_** <br> _Le principali azioni di Home Assistant per inviare, modificare, cancellare un messaggio_ |
-| [Commands and Callback - Comandi e Callback](Istruzioni/4_comandi_e_callback.txt) | **_How do Telegram and Home Assistant communicate?_** <br> _Come comunicano Telegram ed Home Assistant?_ |
-| [Package Structure - Struttura del Package](Istruzioni/5_struttura_package.txt) | **_How the package works and logical scheme_** <br> _Come funziona il package e schema logico_ |
-| [Automations - Le automazioni](Istruzioni/6_automazioni.txt) | **_List of automations, what they do and how they chain to scripts_** <br> _Elenco delle automazioni, quello che fanno e come si concatenano agli script_ |
-| [Scripts - Gli script](Istruzioni/7_script.txt) | **_List of scripts and their operation_** <br> _Elenco degli script e loro funzionamento_ |
+| [Warnings](Istruzioni/warnings.txt) - [Avvertenze](Istruzioni/Avvertenze.txt) | **_See warnings before install this package_** <br> _Leggere le avvertenze prima di installare questo package_ |
+| [Prerequisites](Istruzioni/1_prerequisites.txt) - [Prerequisiti](Istruzioni/1_pre_requisiti.txt) | **_Read prerequisites before proceed_** <br> _Prima di iniziare leggere quali sono i pre requisiti_ |
+| [How to create a bot](Istruzioni/2_how_to_create_telegram_bot.txt) - [Come creare un Bot](Istruzioni/2_come_creare_un_bot.txt) | **_Instructions on how to create a Telegram bot_** <br> _Istruzioni sulla creazione di un bot Telegram_ |
+| [Actions on Home Assistant](Istruzioni/3_how_does_telegram_works.txt) - [Come si fa da Home Assistant?](Istruzioni/3_come_funziona_telegram.txt) | **_The main Home Assistant actions to send, edit, delete a message_** <br> _Le principali azioni di Home Assistant per inviare, modificare, cancellare un messaggio_ |
+| [Commands and Callback](Istruzioni/4_commands_and_callbacks.txt) - [Comandi e Callback](Istruzioni/4_comandi_e_callback.txt) | **_How do Telegram and Home Assistant communicate?_** <br> _Come comunicano Telegram ed Home Assistant?_ |
+| [Package Structure](Istruzioni/5_package_structure.txt) - [Struttura del Package](Istruzioni/5_struttura_package.txt) | **_How the package works and logical scheme_** <br> _Come funziona il package e schema logico_ |
+| [Automations](Istruzioni/6_automations.txt) - [Le automazioni](Istruzioni/6_automazioni.txt) | **_List of automations, what they do and how they chain to scripts_** <br> _Elenco delle automazioni, quello che fanno e come si concatenano agli script_ |
+| [Scripts](Istruzioni/7_scripts.txt) - [Gli script](Istruzioni/7_script.txt)  | **_List of scripts and their operation_** <br> _Elenco degli script e loro funzionamento_ |
 
 <br>
 <br>
