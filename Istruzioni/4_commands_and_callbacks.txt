@@ -1,0 +1,25 @@
+######################################### HOW DO COMMANDS AND CALLBACKS WORK? #############################################
+
+Let's go back to the topic of commands and callbacks because they are essential to understanding automations
+When we write in the Telegram chat /start or /video in Home Assistant, a telegram_command event is generated.
+In the automation we insert as a trigger (WHEN section)
+
+triggers:
+- trigger: event
+event_type: telegram_command
+event_data:
+command: "/start"
+
+and then the actions we want to be executed.
+
+When instead we receive a message from Home Assistant, with notify or telegram_send_message, with an inline_keyboard,
+and we click on one of these buttons, a telegram_callback type event is generated.
+For example, if we click on the Lights button and we want something to happen, we need to create an automation with the following trigger:
+
+triggers:
+- trigger: event
+event_type: telegram_callback
+event_data:
+data: "/lights"
+
+and then the actions we want to be performed.
