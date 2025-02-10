@@ -1,0 +1,7 @@
+Warnings:
+
+Since this Telegram Package was created in reference to my Home Assistant instance and its entities,
+I decline any responsibility for any problems, damages or risks that the user may encounter while using this package.
+
+Before moving automations and scripts, I recommend checking and modifying the entities contained in it, in order to avoid configuration errors.
+Always go to the developer tools and perform a configuration check before restarting Home Assistant or the automations and scripts.
