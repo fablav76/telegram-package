@@ -6,9 +6,9 @@ In the automation we insert as a trigger (WHEN section)
 
 triggers:
 - trigger: event
-event_type: telegram_command
-event_data:
-command: "/start"
+  event_type: telegram_command
+  event_data:
+    command: "/start"
 
 and then the actions we want to be executed.
 
@@ -17,9 +17,9 @@ and we click on one of these buttons, a telegram_callback type event is generate
 For example, if we click on the Lights button and we want something to happen, we need to create an automation with the following trigger:
 
 triggers:
-- trigger: event
-event_type: telegram_callback
-event_data:
-data: "/lights"
+  - trigger: event
+    event_type: telegram_callback
+    event_data:
+      data: "/lights"
 
 and then the actions we want to be performed.
