@@ -1,0 +1,35 @@
+##########################################  PREREQUISITES  ##########################################
+The package is not plug&play. You need to modify all the entities inside it. Then you need to create the packages folder in config and copy the Telegram_package folder into it and possibly also meteo_forecast.yaml for the weather sensors. To make Home Assistant see the yaml files, you need to have the following string in configuration.yaml:
+
+homeassistant:
+  # Packages folder #
+  packages: !include_dir_named packages
+
+and restart Home Assistant.
+The prerequisite for this package to work is to have done the entire bot creation procedure with BotFather (see How to create a bot) and to have configured Telegram polling in the configuration.yaml.
+For example:
+
+telegram_bot:
+  - platform: polling
+    api_key: 5428613602:3k3olewszYm6-47G33s6fvfxC6GfUXasdfdY
+    allowed_chat_ids:
+      - 3175824532
+      - 1673486287
+
+The notify service is needed to send a notification directly to a particular chat.
+to be clear this:
+
+notify:
+  - name: fabio_telegram
+    platform: telegram
+    chat_id: 3175824532
+  - name: sergio_telegram
+    platform: telegram
+    chat_id: 1673486287
+
+I used this service for tg_notifica_allarme automation
+
+P.S. the api key and chad id are not real, they do not correspond to the truth.
+They are placed randomly only for demonstration purposes.
+
+
