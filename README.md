@@ -30,6 +30,8 @@ Video Youtube ▶️
 
 ## Download ZIP
 
+[Github](https://github.com/fablav76/telegram-package/tree/main/packages/Telegram_package) allows you to completely download the files that make up the package.
+Just click on the "green" button and you will download a zip file with all the packages present.<br><br>
 [Github](https://github.com/fablav76/telegram-package/tree/main/packages/Telegram_package) permette di effettuare il completo download dei file che costituiscono il pacchetto.<br>
 Basta cliccare sul pulsante "verde" e si scaricherà un file zip con tutti i packages presenti.
 
