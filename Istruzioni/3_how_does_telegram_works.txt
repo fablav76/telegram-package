@@ -121,5 +121,5 @@ Let's analyze them in detail:
 
 5) telegram_bot.edit_caption
 
-  Questa azione modifica la didascalia sotto ad una foto o un video inviato in precedenza
-  Obbligatorio inserire chat_id, message_id e caption
+  This action changes the caption under a previously sent photo or video
+  Chat_id, message_id and caption are required
