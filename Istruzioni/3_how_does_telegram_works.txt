@@ -1,0 +1,125 @@
+############################################# HOW DOES TELEGRAM WORK? ###########################################
+Basically messages on Telegram can be
+received by performing different actions from Home Assistant:
+1) telegram_bot.send_message sends a message
+2) telegram_bot.edit_message edits a message already sent
+3) telegram_bot.delete_message deletes a message already sent
+4) telegram_bot.edit_replymarkup edits the callback buttons under the message already sent
+5) telegram_bot.edit_caption edits the caption under a photo or video
+6) telegram_bot.send_photo sends a photo
+7) telegram_bot.send_video sends a video
+8) telegram_bot.send_location sends the location of a device
+9) telegram_bot.answer_callback_query responds to a request for callback generating an alert
+10) telegram_bot.leave_chat leaves the chat (don't do it :) )
+
+in this package I used almost all of them except
+answer_callback_query, edit_caption and leave chat (obviously).
+
+Let's analyze them in detail:
+
+1) telegram_bot.send_message
+
+  To send a message in Fabio's chat we can use 2 actions:
+
+  actions:
+    - action: notify.fabio_telegram
+      data:
+        title: "Example Message"
+        message: 'Message with *BOLD*, _ITALIC_ and `MONOSPACE` Text'
+
+  or
+
+  actions:
+    - action: telegram_bot.send_message
+      data:
+        title: "Example Message"
+        target: "3175824532"
+        message: 'Message with *BOLD*, _ITALIC_ and `MONOSPACE` Text'
+
+  where 3175824532 is the chat_id of fabio_telegram (made up number)
+
+  the difference between these 2 actions is that the second one is more flexible
+  and can be used in automations with commands and callbacks, sending the message to the right chat,
+  where the request has been generated.
+
+  In fact, when we type a command /start for example in the Telegram chat
+  or click on a button under a message (callback)
+  an event is generated in Home Assistant that we can use as a trigger (When event) in an automation.
+  Here are 2 examples:
+
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: "/start"
+
+  triggers:
+    - trigger: event
+      event_type: telegram_callback
+      event_data:
+       data: "/click"
+
+  At the same time, the chat_id and user_id are also recorded
+  So in the subsequent actions using this target
+
+  actions:
+    - action: telegram_bot.send_message
+      data:
+        title: "*Dumb automation*"
+        target: "{{ trigger.event.data.user_id }}"
+        message: 'Message with *BOLD*, _ITALIC_ and `MONOSPACE` Text'
+
+  we will send the reply message in the same chat and not to other users
+
+2) telegram_bot.edit_message
+
+  With this action we can edit the previously sent message
+  It is mandatory to enter chat_id, message_id and message
+
+  - action: telegram_bot.edit_message
+    metadata: {}
+    data:
+      message_id: "{{ trigger.event.data.message.message_id }}"
+      chat_id: "{{ trigger.event.data.user_id }}"
+      message: 'Message with *BOLD* Text'
+
+  message_id is the identifier of the message sent
+  "{{ trigger.event.data.message.message_id }}" indicates the message sent
+  by the bot following the trigger event.
+
+  chat_id is instead the user's chat where the message was sent,
+  in fact it is always "{{ trigger.event.data.user_id }}"
+
+3) telegram_bot.delete_message
+
+  With this action we can delete a previously sent message.
+  The syntax is identical to telegram_bot.edit_message
+  Chat_id and message_id are required
+
+4) telegram_bot.edit_replymarkup
+
+  Edit the inline_keyboard of a previously sent message.
+  Mandatory to enter chat_id, message_id
+  Inline keyboards are nothing more than those buttons placed under
+  a message that allow, by pressing them, to start other automations with their callbacks
+  This is an example of an inline keyboard:
+
+  inline_keyboard:
+    - '{{ "\U0001F3E0" }} Home status:/home'
+    - '{{ "\U0001F4A1" }} Lights:/lights,{{ "\U0001F441" }} Sensors:/sensors'
+    - '{{ "\U0001F6A8" }} Alarm:/alarm,{{ "\U00002709" }} Notifications:/notify'
+    - '{{ "\U0001F4BB" }} System:/system,{{ "\U0001F6E0" }} Services:/services'
+    - '{{ "\U0001F4F9" }} Cameras:/video,{{ "\U0001F5FA" }} Locate devices:/locate'
+    - '{{ "\U0001F4F7" }} Snapshots:/snapshots,{{ "\U00002600" }} Weather:/weather'
+
+  Home status is what appears on the button
+  /home is the callback that returns to Home assistant as an event.
+
+  {{ "\U0001F3E0" }} are icons, the codes can be taken from this site:
+  https://unicode.org/emoji/charts/full-emoji-list.html
+  and then replace the + with 3 zeros (the home icon
+
+5) telegram_bot.edit_caption
+
+  Questa azione modifica la didascalia sotto ad una foto o un video inviato in precedenza
+  Obbligatorio inserire chat_id, message_id e caption
