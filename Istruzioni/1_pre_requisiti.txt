@@ -34,5 +34,11 @@ notify:
 
 Ho utilizzato questo servizio per l'automazione tg_notifica_allarme
 
+ATTENZIONE: In base alla nuova integrazione del bot di Telegram, non è più necessario configurare telegram_bot e i notificatori in configuration.yaml.
+
+ATTENZIONE: In base alla nuova integrazione del bot di Telegram, il servizio di notifica è deprecato.
+Ho modificato alcune automazioni per utilizzare la nuova azione notify.send_message.
+Consulta la documentazione ufficiale del bot di Telegram (https://www.home-assistant.io/integrations/telegram_bot#notifiers)
+
 P.S. l'api key ed i chad id non sono reali, non corrispondono al vero.
 Sono messi a caso solo per scopo dimostrativo.
