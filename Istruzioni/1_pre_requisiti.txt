@@ -14,6 +14,7 @@ Il prerequisito per far funzionare questo package è avere fatto tutta la proced
 del bot con BotFather  (vedi Come creare un bot) ed aver configurato Telegram polling nel configuration.yaml.
 Per esempio:
 
+###### DEPRECATO #######
 telegram_bot:
   - platform: polling
     api_key: 5428613602:3k3olewszYm6-47G33s6fvfxC6GfUXasdfdY
@@ -23,7 +24,8 @@ telegram_bot:
 
 Il servizio notify è necessario per inviare una notifica diretta ad una chat in particolare.
 per intenderci questo:
- 
+
+ ###### DEPRECATO #######
 notify:
   - name: fabio_telegram
     platform: telegram
@@ -32,12 +34,12 @@ notify:
     platform: telegram
     chat_id: 1673486287
 
-Ho utilizzato questo servizio per l'automazione tg_notifica_allarme
+AVEVO utilizzato questo servizio per l'automazione tg_notifica_allarme
 
 ATTENZIONE: In base alla nuova integrazione del bot di Telegram, non è più necessario configurare telegram_bot e i notificatori in configuration.yaml.
 
 ATTENZIONE: In base alla nuova integrazione del bot di Telegram, il servizio di notifica è deprecato.
-Ho modificato alcune automazioni per utilizzare la nuova azione notify.send_message.
+Ho modificato alcune automazioni per utilizzare la nuova azione notify.send_message (vedi automazione tg_avvio_server.yaml)
 Consulta la documentazione ufficiale del bot di Telegram (https://www.home-assistant.io/integrations/telegram_bot#notifiers)
 
 P.S. l'api key ed i chad id non sono reali, non corrispondono al vero.
