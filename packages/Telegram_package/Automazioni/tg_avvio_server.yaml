@@ -1,11 +1,5 @@
 automation:
-  # questa prima automazione va modificata con il proprio servizio notify di telegram
-  # configurato in configuration.yaml
-  # notify:
-  #  - name: fabio_telegram
-  #    platform: telegram
-  #    chat_id: xxxxxxxxx
-  # sostituire quindi notify.fabio_telegram con il vostro
+  # questa prima automazione va modificata inserendo il proprio chat id
   - id: tg avvio server
     alias: tg avvio server
     triggers:
@@ -15,10 +9,12 @@ automation:
       - delay:
           hours: 0
           minutes: 0
-          seconds: 10
+          seconds: 15
           milliseconds: 0
-      - action: notify.fabio_telegram
+      - action: telegram_bot.send_message
         data:
+          target:
+            - "123456789"
           message: "✅ *{{ states('sensor.homeassistant_start')|replace ('initialized in', 'avviato in') }}* ✅"
           data:
             inline_keyboard:
