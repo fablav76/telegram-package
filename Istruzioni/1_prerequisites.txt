@@ -27,7 +27,13 @@ notify:
     platform: telegram
     chat_id: 1673486287
 
-I used this service for tg_notifica_allarme automation
+I used this service for tg_notifica_allarme automation.
+
+ATTENTION: According to new Telegram bot integration there's no need to configure telegram_bot and notifiers in configuration.yaml anymore.
+
+ATTENTION: According to new Telegram bot integration, notify service is deprecated.
+I've modified some automations to use the new action notify.send_message.
+See the official Telegram bot documentation (https://www.home-assistant.io/integrations/telegram_bot#notifiers)
 
 P.S. the api key and chad id are not real, they do not correspond to the truth.
 They are placed randomly only for demonstration purposes.
