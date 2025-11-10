@@ -1,6 +1,6 @@
 # Cambiare l'entita alarm_control_panel.home con la vostra
 # alle righe 14 19 24
-# cambiare notify.fabio_telegram con il vostro servizio notify di Telegram
+# cambiare il taget inserendo il proprio chat id
 # come spiegato nei pre requisiti.
 
 automation:
@@ -32,8 +32,10 @@ automation:
                 id:
                   - alarm-disarmed
             sequence:
-              - action: notify.fabio_telegram
+              - action: telegram_bot.send_message
                 data:
+                  target:
+                    - "123456789"
                   message: >-
                     *Allarme disattivato*
                     {{'\n'}}
@@ -45,8 +47,10 @@ automation:
                 id:
                   - alarm-armed-home
             sequence:
-              - action: notify.fabio_telegram
+              - action: telegram_bot.send_message
                 data:
+                  target:
+                    - "123456789"
                   message: >-
                     *Allarme attivato (HOME)*
                     {{'\n'}}
@@ -58,8 +62,10 @@ automation:
                 id:
                   - alarm-armed-away
             sequence:
-              - action: notify.fabio_telegram
+              - action: telegram_bot.send_message
                 data:
+                  target:
+                    - "123456789"
                   message: >-
                     *ALLARME ATTIVATO (FUORI CASA)*
                     {{'\n'}}
