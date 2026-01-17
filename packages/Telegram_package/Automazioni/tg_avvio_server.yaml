@@ -15,7 +15,6 @@ automation:
         data:
           target:
             - "123456789"
-          message: "✅ *Home Assistant si è avviato* ✅"
-          data:
-            inline_keyboard:
+          message: "✅ *Home Assistant si è avviato* ✅
+          inline_keyboard:
               - "{{ \"\\U0001F3E0\" }} Avvia il bot:/start"
